@@ -32,15 +32,15 @@ endif()
 
 # Meta information about the project
 # cmake-format: off
-set(META_PROJECT_NAME        "asap")
-set(META_PROJECT_DESCRIPTION "Instantly start with a fully loaded CMake project")
+set(META_PROJECT_NAME        "asap-fsm")
+set(META_PROJECT_DESCRIPTION "C++ template-based finite state machines")
 set(META_AUTHOR_ORGANIZATION "The Authors")
-set(META_GITHUB_REPO         "https://github.com/abdes/asap")
-set(META_AUTHOR_DOMAIN       "https://github.com/abdes/asap")
+set(META_GITHUB_REPO         "https://github.com/asap-projects/asap-fsm")
+set(META_AUTHOR_DOMAIN       "https://github.com/asap-projects/asap-fsm")
 set(META_AUTHOR_MAINTAINER   "Abdessattar Sassi")
-set(META_VERSION_MAJOR       "4")
+set(META_VERSION_MAJOR       "1")
 set(META_VERSION_MINOR       "0")
-set(META_VERSION_PATCH       "1")
+set(META_VERSION_PATCH       "0")
 set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
@@ -283,7 +283,7 @@ include(SphinxGeneration)
 
 # Setup sphinx doc master target and add other submodules as dependencies
 if(SPHINX_FOUND)
-  asap_with_sphinx("${META_PROJECT_NAME}")
+  asap_with_sphinx(master)
 
   # Add a target for copying the index.html from the doc dir to the sphinx build
   # dir. A dependency on this target will be added to the master sphinx target.
@@ -296,13 +296,11 @@ if(SPHINX_FOUND)
                     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html)
 
   add_dependencies(
-    ${META_PROJECT_NAME}_sphinx
+    master_sphinx
     copy_doc_index
     # Hardcode `asap` in the module name as we do not want this prefix to change
     # with the forked project name.
-    asap_common_sphinx
-    # Add more submodule documentation targets after this, using variables in
-    # the target names consistently with the module's CMakeLists.txt.
+    asap_fsm_sphinx
   )
 
 endif()
@@ -312,7 +310,7 @@ endif()
 # ==============================================================================
 
 add_subdirectory(common)
-add_subdirectory(contract)
+add_subdirectory(fsm)
 
 # ==============================================================================
 # Code analyzers: clang-tidy, cppcheck, valgrind, sanitizers, etc...

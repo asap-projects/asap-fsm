@@ -123,9 +123,9 @@ html_theme_options = {
 # -- Options for intersphinx extension ---------------------------------------
 
 intersphinx_mapping = {
-    'common': (
-        '@SPHINX_BUILD_DIR@/asap_common/html',
-        '@SPHINX_BUILD_DIR@/asap_common/html/objects.inv')
+    'fsm': (
+        '@SPHINX_BUILD_DIR@/asap_fsm/html',
+        '@SPHINX_BUILD_DIR@/asap_fsm/html/objects.inv')
 }
 
 # -- Options for todo extension ----------------------------------------------
