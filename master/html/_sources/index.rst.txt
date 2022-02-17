@@ -24,7 +24,7 @@ Last Updated on |date|
    version
 
 Welcome! This is the documentation for the *asap-fsm* project. This is a
-build container for the `fsm` module. It the
+build container for the *fsm* module. It uses the
 `asap <https://github.com/abdes/asap>`_ integrated build system and the overall
 structure for projects following the asap development workflow.
 
@@ -33,9 +33,9 @@ Parts of the documentation
 
 :doc:`fsm <fsm:api>`
 -------------------------------------------------
-*the project provides a single module, :doc:`fsm <fsm:api>`, which provides
-the API. Start here to understand the classes provided by the library and how
-to use them to build your own state machine.*
+*the project provides a single module, fsm, which provides the API. Start
+here to understand the classes provided by the library and how to use them to
+build your own state machine.*
 
 Acknowledgements
 ================
