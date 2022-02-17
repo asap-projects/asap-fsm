@@ -1,41 +1,58 @@
-# Starter project for C++ with cmake
+# C++ template-based finite state machines
 
 ![Start Now!!](doc/_static/logo.png "ASAP Logo")
 
-[![Linux Build (Ubuntu latest)](https://github.com/abdes/asap/actions/workflows/linux-build.yml/badge.svg?branch=develop)](https://github.com/abdes/asap/actions/workflows/linux-build.yml)
-[![Windows Build (latest)](https://github.com/abdes/asap/actions/workflows/windows-build.yml/badge.svg?branch=develop)](https://github.com/abdes/asap/actions/workflows/windows-build.yml)
+[![Linux Build (Ubuntu latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml/badge.svg?branch=develop)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml)
+[![Windows Build (latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml/badge.svg?branch=develop)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml)
 
-## [Project Documentation](https://abdes.github.io/asap/)
+## [Project Documentation](https://asap-projects.github.io/asap-fsm/)
 
 ## Overview
 
-- `CMake` as the build system with or without presets
-- cross-platform portability on Linux, OS X and Windows
-- multiple compilers: clang, g++ and MSVC
-- modular structure with each module self-contained in a subdirectory within the project
-- `CMake` build helpers to facilitate declaration of library, exe, test modules, for the
-  end-to-end lifecycle including doc generation, test, packaging etc...
-- common facilities (common module) for platform specifics, assertions support, logging
-- unit testing with Google Test
-- code coverage with clang or g++
-- zero-touch valgrind, clang-tidy, clang-format, google sanitizers, etc.
-- development can be done locally or in a dev container with vscode.
+This is a template-based implementation of state machines. The FSM has a 
+set of possible states and a set of rules that govern transitions between 
+the current state and some other state upon receiving an event.
+
+A state can be an arbitrary object, which type is used to distinguish it from
+other states. Therefore, there is no need to maintain a list of known states
+(in an enumeration for example). We also don't want to enforce any
+relationship between those types to keep them completely independent. The
+state machine is a variadic template that gets to know its states through the
+parameter pack and stores them in a tuple.
+
+Transitions from the current state to other states are triggered by events.
+This requires that all the state types have a `Handle` method that accepts an
+event of the type of event being handled. To avoid creating unnecessary
+dependencies between the state types and the state machine type, a state's
+`Handle` method will return an object of a specific type (an action) that
+will describe what action should the machine take.
+
+Events are produced outside the state machine and fed into it by an external
+event loop which calls the state machine's `Handle()` method. The latter
+dispatches the event to the current state, which returns a specific action
+that gets executed to eventually transition to a new state. Event handlers,
+the action execution, and anything inside could throw exceptions to report
+errors that are *all* caught and translated into an execution status returned
+to the event production loop.
+
+Examples and detailed documentation of the API can be found at the
+[Project Documentation](https://asap-projects.github.io/asap-fsm/) pages.
 
 ## Getting the code
 
 ```bash
-git clone --recurse-submodules -j4 https://github.com/abdes/asap.git
+git clone --recurse-submodules -j4 https://github.com/asap-projects/asap-fsm.git
 ```
 
 NOTES:
 
-- -j4 requests git to parallelize cloning of repos. Needs a relatively recent version of git. If
-  that is not available, simply do not use this option.
+- -j4 requests git to parallelize cloning of repos. Needs a relatively recent 
+  version of git. If that is not available, simply do not use this option.
 
 ## Requirements
 
-Make sure you have a C++ compiler with C++-17 capabilities at least. Gnu, Clang and MSVC all can do
-that with a recent version.
+Make sure you have a C++ compiler with C++-17 capabilities at least. Gnu, Clang 
+and MSVC all can do that with a recent version.
 
 ## Enabling husky/commitlint/standard-version
 
@@ -53,8 +70,9 @@ npm install -g standard-version
 mkdir _build && cd _build && cmake .. && cmake --build .
 ```
 
-or just use one of the predefined `CMake` presets. Detailed instructions are in the project
-documentation, and many useful commands are listed [here](https://abdes.github.io/asap/master/html/01-getting-started/useful-commands.html).
+or just use one of the predefined `CMake` presets. Detailed instructions and 
+many useful commands are listed 
+[here](https://abdes.github.io/asap/master/html/01-getting-started/useful-commands.html).
 
 
 ```cmake
