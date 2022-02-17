@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finite State Machines &#8212; Finite State Machine</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=84ace793992934648b4de8eed757e5a2" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.9d8b4a8b9bb19db25eeaddc40d639ba2.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="License" href="../license.html" />
+    <link rel="prev" title="API reference" href="../api.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<div class="col-12 col-md-3 bd-sidebar site-navigation " id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Finite State Machine</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../api.html">
+   API
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     State Machine library
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../license.html">
+   License
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../version.html">
+   Version
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<!-- This is an invisible pixel that we watch to see if we've scrolled. -->
+<div class="sbt-scroll-pixel-helper"></div>
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            <div class="topbar-left">
+                
+                <label class="nav-toggle-button" for="__navigation">
+                    <div class="visually-hidden">Toggle navigation</div>
+                    <i class="fas fa-bars"></i>
+                </label>
+                
+            </div>
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/api/fsm.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/asap-projects/asap-fsm"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/asap-projects/asap-fsm/issues/new?title=Issue%20on%20page%20%2Fapi/fsm.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-machine-actions">
+   State Machine Actions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-machine-exceptions">
+   State Machine Exceptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-machine-state-types">
+   State Machine State Types
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Finite State Machines</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-machine-actions">
+   State Machine Actions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-machine-exceptions">
+   State Machine Exceptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#state-machine-state-types">
+   State Machine State Types
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="finite-state-machines">
+<h1>Finite State Machines<a class="headerlink" href="#finite-state-machines" title="Permalink to this headline">¶</a></h1>
+<p>The header &lt;common/fsm.h&gt; provides a template based framework to implement
+finite state machines in C++.</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4IDpEN4asap3fsm12StateMachineE">
+<span id="_CPPv3IDpEN4asap3fsm12StateMachineE"></span><span id="_CPPv2IDpEN4asap3fsm12StateMachineE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">States</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classasap_1_1fsm_1_1_state_machine"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateMachine</span></span></span><a class="headerlink" href="#_CPPv4IDpEN4asap3fsm12StateMachineE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Represents a Finite State Machine (FSM). </p>
+<p>The FSM has a set of possible states and a set of rules that govern transitions between the current state and some other state upon receiving an event.</p>
+<p>A state can be an arbitrary object, which type is used to distinguish it from other states. Therefore, there is no need to maintain a list of known states (in an enumeration for example). We also don’t want to enforce any relationship between those types to keep them completely independent. The state machine is a variadic template that gets to know its states through the parameter pack and stores them in a tuple.</p>
+<p>The state machine keeps track of the current state as a <code class="docutils literal notranslate"><span class="pre">std::variant</span></code> (which can accommodate the diversity of state types) and assumes that the first state provided to it is the <em>initial state</em>. It is possible however to explicitly transition the state machine into a specific state using its <code class="docutils literal notranslate"><span class="pre">TransitionTo()</span></code> method.</p>
+<p>Transitions from the current state to other states are triggered by events. This requires that all the state types have a <code class="docutils literal notranslate"><span class="pre">Handle</span></code> method that accepts an event of the type of event being handled. To avoid creating unnecessary dependencies between the state types and the state machine type, a state’s <code class="docutils literal notranslate"><span class="pre">Handle</span></code> method will return an object of a specific type (an action) that will describe what action should the machine take.</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UnlockEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">      </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Maybe</span><span class="o">&lt;</span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="o">&gt;</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">DoNothing</span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+ In principle, a state machine should always transition to some state after receiving an event, even if it’s the same state as the current one. When we want to skip performing a transition action, we can simply use the helper action type ‘<a class="reference internal" href="#structasap_1_1fsm_1_1_do_nothing"><span class="std std-ref">DoNothing</span></a>’.</p>
+<p>Events are produced outside the state machine and fed into it by an external event loop which calls the state machine’s <code class="docutils literal notranslate"><span class="pre">Handle()</span></code> method. The latter dispatches the event to the current state, which returns a specific action that gets executed to eventually transition to a new state. Event handlers, the action execution, and anything inside could throw exceptions to report errors that are <em>all</em> caught and translated into an execution status returned to the event production loop.</p>
+<p>The execution status can take one of the following types documented in the class: Continue, Terminate, TerminateWithError and ReissueEvent. Refer to the documentation of these types and the StateMachine::Status.</p>
+<p><strong>Full Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * This example simulates a door with an electronic lock. When the door</span>
+<span class="cm"> * is locked, the user choses a lock code that needs to be re-entered</span>
+<span class="cm"> * to unlock it.</span>
+<span class="cm"> */</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">OpenEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">CloseEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">LockEvent</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">newKey</span><span class="p">;</span><span class="w"> </span><span class="c1">// the lock code chosen by the user</span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">UnlockEvent</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"> </span><span class="c1">// the lock key entered when unlocking</span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">ClosedState</span><span class="p">;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">OpenState</span><span class="p">;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">LockedState</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">ClosedState</span><span class="w"></span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">On</span><span class="o">&lt;</span><span class="n">LockEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">LockedState</span><span class="o">&gt;&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="n">On</span><span class="o">&lt;</span><span class="n">OpenEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">OpenState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">OpenState</span><span class="w"></span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">On</span><span class="o">&lt;</span><span class="n">CloseEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">LockedState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">ByDefault</span><span class="o">::</span><span class="n">Handle</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">explicit</span><span class="w"> </span><span class="n">LockedState</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">key_</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">LockEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">key_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="n">newKey</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Continue</span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UnlockEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">      </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Maybe</span><span class="o">&lt;</span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="o">&gt;</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">DoNothing</span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">key_</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="k">using</span><span class="w"> </span><span class="n">Door</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">ClosedState</span><span class="p">,</span><span class="w"> </span><span class="n">OpenState</span><span class="p">,</span><span class="w"> </span><span class="n">LockedState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// NOLINTNEXTLINE</span>
+<span class="n">TEST</span><span class="p">(</span><span class="n">StateMachine</span><span class="p">,</span><span class="w"> </span><span class="n">ExampleTest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">Door</span><span class="w"> </span><span class="n">door</span><span class="p">{</span><span class="n">ClosedState</span><span class="p">{},</span><span class="w"> </span><span class="n">OpenState</span><span class="p">{},</span><span class="w"> </span><span class="n">LockedState</span><span class="p">{</span><span class="mi">0</span><span class="p">}};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lock_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">bad_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">LockEvent</span><span class="p">{</span><span class="n">lock_code</span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">UnlockEvent</span><span class="p">{</span><span class="n">bad_code</span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">door</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">UnlockEvent</span><span class="p">{</span><span class="n">lock_code</span><span class="p">});</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+<div class="section" id="state-machine-actions">
+<h2>State Machine Actions<a class="headerlink" href="#state-machine-actions" title="Permalink to this headline">¶</a></h2>
+<p>Actions are returned from state event handlers and are the normal way of
+communicating back to the state machine what to do next. The only requirement on
+an Action type is to have an Execute() method, that gets the state machine
+instance, the current state and the event being processed.</p>
+<p>Additional type management utility methods are added to action classes as needed
+to simplify the unit testing of the states and actions. They are in no way used
+in the basic functioning of a state machine which totally relies on static
+compile-time types and rules.</p>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4asap3fsm12TransitionToE">
+<span id="_CPPv3I0EN4asap3fsm12TransitionToE"></span><span id="_CPPv2I0EN4asap3fsm12TransitionToE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TargetState</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1_transition_to"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TransitionTo</span></span></span><a class="headerlink" href="#_CPPv4I0EN4asap3fsm12TransitionToE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An action type that represents a state transition from the current state to the target state specified as a template parameter. </p>
+<p>This action supports rich states which may contain data and may have some complex logic that utilizes that data to decide on the next state transition. When being executed by the state machine, it is provided with the current state (through the state machine instance), the newly selected state and the event that triggered the transition.</p>
+<p>Furthermore, it calls the <code class="docutils literal notranslate"><span class="pre">OnLeave</span></code> method on the previous state and <code class="docutils literal notranslate"><span class="pre">OnEnter</span></code> on the destination state, provided they are in the states interface (it uses <a class="reference external" href="https://en.cppreference.com/w/cpp/language/sfinae">SFINAE</a> to detect if such a method exists).</p>
+<p>The requirement on the <code class="docutils literal notranslate"><span class="pre">OnLeave</span></code> method is to return a <code class="docutils literal notranslate"><span class="pre">State</span></code> object that can only be one of <code class="docutils literal notranslate"><span class="pre">Continue</span></code>, <code class="docutils literal notranslate"><span class="pre">Terminate</span></code> or <code class="docutils literal notranslate"><span class="pre">TerminateWithError</span></code>. The <code class="docutils literal notranslate"><span class="pre">OnEnter</span></code> method on the other hand can return any of the possible values of <code class="docutils literal notranslate"><span class="pre">Status</span></code>.</p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">TransitionEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">ExampleMockState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// NOLINTNEXTLINE</span>
+<span class="w">    </span><span class="n">MOCK_METHOD</span><span class="p">(</span><span class="n">Status</span><span class="p">,</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="p">),</span><span class="w"> </span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// NOLINTNEXTLINE</span>
+<span class="w">    </span><span class="n">MOCK_METHOD</span><span class="p">(</span><span class="n">Status</span><span class="p">,</span><span class="w"> </span><span class="n">OnLeave</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="p">),</span><span class="w"> </span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">On</span><span class="o">&lt;</span><span class="n">TransitionEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">FirstState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">mock_</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">mock</span><span class="p">)}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// We only implement the OnLeave method, but that&#39;s ok.</span>
+<span class="w">    </span><span class="c1">// The action will only call whatever is implemented.</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">OnLeave</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">mock_</span><span class="o">-&gt;</span><span class="n">OnLeave</span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">SecondState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">mock_</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">mock</span><span class="p">)}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// We only implement the OnEnter method, but that&#39;s ok.</span>
+<span class="w">    </span><span class="c1">// The action will only call whatever is implemented.</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">mock_</span><span class="o">-&gt;</span><span class="n">OnEnter</span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">mock_initial_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">mock_another_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine</span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">FirstState</span><span class="p">{</span><span class="n">mock_initial_state</span><span class="p">},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{</span><span class="n">mock_another_state</span><span class="p">}};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="n">event</span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">EXPECT_CALL</span><span class="p">(</span><span class="o">*</span><span class="n">mock_initial_state</span><span class="p">,</span><span class="w"> </span><span class="n">OnLeave</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">event</span><span class="p">)))</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">Times</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">WillOnce</span><span class="p">(</span><span class="n">Return</span><span class="p">(</span><span class="n">Continue</span><span class="p">{}));</span><span class="w"></span>
+<span class="w">  </span><span class="n">EXPECT_CALL</span><span class="p">(</span><span class="o">*</span><span class="n">mock_another_state</span><span class="p">,</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">event</span><span class="p">)))</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">Times</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">WillOnce</span><span class="p">(</span><span class="n">Return</span><span class="p">(</span><span class="n">Status</span><span class="p">{</span><span class="n">Continue</span><span class="p">{}}));</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+ A state can implement a <code class="docutils literal notranslate"><span class="pre">Handle</span></code> method that returns a <a class="reference internal" href="#structasap_1_1fsm_1_1_transition_to"><span class="std std-ref">TransitionTo</span></a> object constructed with a piece of data (std::any object) that will be passed to the next state when its <code class="docutils literal notranslate"><span class="pre">onEnter</span></code> method is called. The next state can opt to ignore that data by implementing <code class="docutils literal notranslate"><span class="pre">onEnter(Event</span> <span class="pre">event)</span></code> only or can opt to use the data by implementing <code class="docutils literal notranslate"><span class="pre">onEnter(Event</span> <span class="pre">event,</span> <span class="pre">std::any</span> <span class="pre">data)</span></code>.</p>
+<p><strong>Example of data passing between states</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">TransitionEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">ExampleMockState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// NOLINTNEXTLINE</span>
+<span class="w">    </span><span class="n">MOCK_METHOD</span><span class="p">(</span><span class="n">Status</span><span class="p">,</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">),</span><span class="w"> </span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// NOLINTNEXTLINE</span>
+<span class="w">    </span><span class="n">MOCK_METHOD</span><span class="p">(</span><span class="n">Status</span><span class="p">,</span><span class="w"> </span><span class="n">OnLeave</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="p">),</span><span class="w"> </span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">FirstState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">mock_</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">mock</span><span class="p">)}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// We only implement the OnLeave method, but that&#39;s ok.</span>
+<span class="w">    </span><span class="c1">// The action will only call whatever is implemented.</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">OnLeave</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">mock_</span><span class="o">-&gt;</span><span class="n">OnLeave</span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// This special handler allows for passing data via the</span>
+<span class="w">    </span><span class="c1">// transition object to the next state which can be consumed</span>
+<span class="w">    </span><span class="c1">// if that state implements `onEnter(event, data)`</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">SecondState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">mock_</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">mock</span><span class="p">)}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// This implementation expects data to be passed from the</span>
+<span class="w">    </span><span class="c1">// previous state.</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">EXPECT_THAT</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">any_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="w"> </span><span class="n">Eq</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Mocking methods with std::any arguments will fail to compile with clang</span>
+<span class="w">      </span><span class="c1">// and there is no fix for it from gmock. Just specifically cast the</span>
+<span class="w">      </span><span class="c1">// std::any before forwarding to the mock.</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">mock_</span><span class="o">-&gt;</span><span class="n">OnEnter</span><span class="p">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">any_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mock_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">mock_initial_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">mock_another_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">ExampleMockState</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine</span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">FirstState</span><span class="p">{</span><span class="n">mock_initial_state</span><span class="p">},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{</span><span class="n">mock_another_state</span><span class="p">}};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">TransitionEvent</span><span class="w"> </span><span class="n">event</span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">EXPECT_CALL</span><span class="p">(</span><span class="o">*</span><span class="n">mock_initial_state</span><span class="p">,</span><span class="w"> </span><span class="n">OnLeave</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">event</span><span class="p">)))</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">Times</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">WillOnce</span><span class="p">(</span><span class="n">Return</span><span class="p">(</span><span class="n">Continue</span><span class="p">{}));</span><span class="w"></span>
+<span class="w">  </span><span class="n">EXPECT_CALL</span><span class="p">(</span><span class="o">*</span><span class="n">mock_another_state</span><span class="p">,</span><span class="w"> </span><span class="n">OnEnter</span><span class="p">(</span><span class="n">Ref</span><span class="p">(</span><span class="n">event</span><span class="p">),</span><span class="w"> </span><span class="o">::</span><span class="n">testing</span><span class="o">::</span><span class="n">_</span><span class="p">))</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">Times</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="n">WillOnce</span><span class="p">(</span><span class="n">Return</span><span class="p">(</span><span class="n">Status</span><span class="p">{</span><span class="n">Continue</span><span class="p">{}}));</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N4asap3fsm9DoNothingE">
+<span id="_CPPv3N4asap3fsm9DoNothingE"></span><span id="_CPPv2N4asap3fsm9DoNothingE"></span><span id="asap::fsm::DoNothing"></span><span class="target" id="structasap_1_1fsm_1_1_do_nothing"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DoNothing</span></span></span><a class="headerlink" href="#_CPPv4N4asap3fsm9DoNothingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Helper action representing the situation where an event is ignored and the currents state stays as is. </p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">DoNothingEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">TestState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">DoNothingEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">DoNothing</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Returning the `DoNothing` action will result in no side effects</span>
+<span class="w">      </span><span class="c1">// from the state machine calling the `Execute` method of the action.</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">DoNothing</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">TestState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">{</span><span class="n">TestState</span><span class="p">{}};</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">DoNothingEvent</span><span class="p">{});</span><span class="w"></span>
+</pre></div>
+</div>
+ A typical use of this action is in combination with <a class="reference internal" href="#structasap_1_1fsm_1_1_by_default"><span class="std std-ref">ByDefault</span></a> to make a state that by default does nothing with any event it receives and therefore only focus on implementing those event handlers that make sense for that particular state. </p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N4asap3fsm11ReportErrorE">
+<span id="_CPPv3N4asap3fsm11ReportErrorE"></span><span id="_CPPv2N4asap3fsm11ReportErrorE"></span><span id="asap::fsm::ReportError"></span><span class="target" id="structasap_1_1fsm_1_1_report_error"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReportError</span></span></span><a class="headerlink" href="#_CPPv4N4asap3fsm11ReportErrorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The action to be used to report an error from an event handler. </p>
+<p>Throwing an exception from event handlers to report an error is not recommended as it will break the interface of the event handlers (expected to return an action to be executed) and make the unit testing more complicated.</p>
+<p>Instead, the event handler would use this action to report the error, providing the error explanatory message in the form of the action’s data. </p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4IDpEN4asap3fsm5OneOfE">
+<span id="_CPPv3IDpEN4asap3fsm5OneOfE"></span><span id="_CPPv2IDpEN4asap3fsm5OneOfE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">Actions</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1_one_of"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OneOf</span></span></span><a class="headerlink" href="#_CPPv4IDpEN4asap3fsm5OneOfE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Base type for states modeling the situation where the result of an event can be one of a set of possible actions. </p>
+<p>Since actions are returned from state <code class="docutils literal notranslate"><span class="pre">Handle</span></code> methods and can have only one return type, this class multiplexes the return types using the variadic template parameter pack.</p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialAction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Execute</span><span class="p">(</span><span class="n">Machine</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*machine*/</span><span class="p">,</span><span class="w"> </span><span class="n">FirstState</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*state*/</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">SpecialEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">Continue</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">FirstState</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">transition</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">transition_</span><span class="p">{</span><span class="n">transition</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// This handler has two alternate paths. We use the `OneOf`</span>
+<span class="w">    </span><span class="c1">// helper to still be able to return a single action type</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SpecialEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">        </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">OneOf</span><span class="o">&lt;</span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">SpecialAction</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">transition_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">{};</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">SpecialAction</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">transition_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine1</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{</span><span class="nb">true</span><span class="p">},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">machine1</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">SpecialEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine1</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine2</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{</span><span class="nb">false</span><span class="p">},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine2</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">SpecialEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine2</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4asap3fsm5MaybeE">
+<span id="_CPPv3I0EN4asap3fsm5MaybeE"></span><span id="_CPPv2I0EN4asap3fsm5MaybeE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Action</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1_maybe"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Maybe</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">fsm</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4IDpEN4asap3fsm5OneOfE" title="asap::fsm::OneOf"><span class="n"><span class="pre">OneOf</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN4asap3fsm5MaybeE" title="asap::fsm::Maybe::Action"><span class="n"><span class="pre">Action</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4asap3fsm9DoNothingE" title="asap::fsm::DoNothing"><span class="n"><span class="pre">DoNothing</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4I0EN4asap3fsm5MaybeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Base type for states modeling the situation where when an event is triggered, we want to either do one thing or do nothing at all. </p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialAction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Execute</span><span class="p">(</span><span class="n">Machine</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*machine*/</span><span class="p">,</span><span class="w"> </span><span class="n">FirstState</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*state*/</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">SpecialEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">Continue</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">FirstState</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">transition</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">transition_</span><span class="p">{</span><span class="n">transition</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// This handler has two alternate paths. We use the `OneOf`</span>
+<span class="w">    </span><span class="c1">// helper to still be able to return a single action type</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SpecialEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">        </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">OneOf</span><span class="o">&lt;</span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">SpecialAction</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">transition_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">{};</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">SpecialAction</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">transition_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine1</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{</span><span class="nb">true</span><span class="p">},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">machine1</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">SpecialEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine1</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine2</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{</span><span class="nb">false</span><span class="p">},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine2</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">SpecialEvent</span><span class="p">{});</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine2</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4asap3fsm9is_one_ofE">
+<span id="_CPPv3I0EN4asap3fsm9is_one_ofE"></span><span id="_CPPv2I0EN4asap3fsm9is_one_ofE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1is__one__of"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_one_of</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">false_type</span></span><a class="headerlink" href="#_CPPv4I0EN4asap3fsm9is_one_ofE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A concept to identify if a particular type is a OneOf&lt;…Actions&gt; type. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0DpEN4asap3fsm20supports_alternativeEbv">
+<span id="_CPPv3I0DpEN4asap3fsm20supports_alternativeEv"></span><span id="_CPPv2I0DpEN4asap3fsm20supports_alternativeEv"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">Ts</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespaceasap_1_1fsm_1a5fa7727b3966f7f3a78381f1be8b1056"></span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">fsm</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">supports_alternative</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><a class="headerlink" href="#_CPPv4I0DpEN4asap3fsm20supports_alternativeEbv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A concept to identify <a class="reference internal" href="#structasap_1_1fsm_1_1_one_of"><span class="std std-ref">OneOf</span></a> types with a specific alternative. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="state-machine-exceptions">
+<h2>State Machine Exceptions<a class="headerlink" href="#state-machine-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>While state event handlers use primarily the asap::fsm::ReportError action to
+transmit errors to the state machine, other places in the implementation such as
+the OnEnter() or OnLeave() methods in states do not have access to actions, and
+therefore report errors as exceptions.</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N4asap3fsm17StateMachineErrorE">
+<span id="_CPPv3N4asap3fsm17StateMachineErrorE"></span><span id="_CPPv2N4asap3fsm17StateMachineErrorE"></span><span id="asap::fsm::StateMachineError"></span><span class="target" id="classasap_1_1fsm_1_1_state_machine_error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">asap</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">fsm</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">StateMachineError</span></span></span><a class="headerlink" href="#_CPPv4N4asap3fsm17StateMachineErrorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The base class for exceptions thrown by state machine implementations. </p>
+<p>For consistency and clarity in the error messages and handling of errors when animating the state machine, it is important that exceptions thrown by concrete state machines derive from this class.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>StateMachine::Handle </p>
+</div>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4asap3fsm17StateMachineError4WhatEv">
+<span id="_CPPv3NK4asap3fsm17StateMachineError4WhatEv"></span><span id="_CPPv2NK4asap3fsm17StateMachineError4WhatEv"></span><span id="asap::fsm::StateMachineError::WhatC"></span><span class="target" id="classasap_1_1fsm_1_1_state_machine_error_1a03cf7e16a44d8b3be1a971b22f920d7c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">What</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><a class="headerlink" href="#_CPPv4NK4asap3fsm17StateMachineError4WhatEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Provides an explanatory message about the error. </p>
+<p>THe actual error message should be set by the specific derived exception class. If not set, a generic message will be provided which may not say anything useful about the error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pointer to a null-terminated string with explanatory information. The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function on the exception object is called. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N4asap3fsm17StateMachineError4ImplE">
+<span id="_CPPv3N4asap3fsm17StateMachineError4ImplE"></span><span id="_CPPv2N4asap3fsm17StateMachineError4ImplE"></span><span id="asap::fsm::StateMachineError::Impl"></span><span class="target" id="classasap_1_1fsm_1_1_state_machine_error_1_1_impl"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Impl</span></span></span><a class="headerlink" href="#_CPPv4N4asap3fsm17StateMachineError4ImplE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="state-machine-state-types">
+<h2>State Machine State Types<a class="headerlink" href="#state-machine-state-types" title="Permalink to this headline">¶</a></h2>
+<p>A number of helper base classes for implementing states are provided. These are
+intended for simplifying typical obvious event processing cases and for allowing
+to easily implement the unique interface of event handlers always returning an
+Action.</p>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I00EN4asap3fsm2OnE">
+<span id="_CPPv3I00EN4asap3fsm2OnE"></span><span id="_CPPv2I00EN4asap3fsm2OnE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Event</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Action</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1_on"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">On</span></span></span><a class="headerlink" href="#_CPPv4I00EN4asap3fsm2OnE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Base type for states to facilitate implementation of handlers that simply return a default-constructed action of a certain type. </p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">On</span><span class="o">&lt;</span><span class="n">SpecialEvent</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">SpecialEvent</span><span class="p">{});</span><span class="w"> </span><span class="c1">// TransitionTo AnotherState</span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4asap3fsm9ByDefaultE">
+<span id="_CPPv3I0EN4asap3fsm9ByDefaultE"></span><span id="_CPPv2I0EN4asap3fsm9ByDefaultE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Action</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1_by_default"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ByDefault</span></span></span><a class="headerlink" href="#_CPPv4I0EN4asap3fsm9ByDefaultE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Base type for states to facilitate specification of a default action. </p>
+<p>States need to have handlers for all events that go through the state machine, even though they are really interested only in some specific events. For the rest of the events, either nothing is done or in some special cases a default action is returned. To make the implementation of states easier, this base type provides a straightforward way to express the default action for a state.</p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">NotForMeEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialEvent</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// If an event does not have a dedicated `Handle` overload, use the</span>
+<span class="w">  </span><span class="c1">// `ByDefault` action (i.e. `DoNothing` in this case).</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Bring in the `Handle` overloads from the `ByDefault` base type.</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">ByDefault</span><span class="o">::</span><span class="n">Handle</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// A dedicated overload of `Handle` for the special event ensures</span>
+<span class="w">    </span><span class="c1">// that it is not using the `ByDefault` action.</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SpecialEvent</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="w"> </span><span class="n">machine</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">NotForMeEvent</span><span class="p">{});</span><span class="w"> </span><span class="c1">// DoNothing</span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">SpecialEvent</span><span class="p">{});</span><span class="w"> </span><span class="c1">// TransitionTo AnotherState</span>
+<span class="w">  </span><span class="n">ASSERT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4IDpEN4asap3fsm4WillE">
+<span id="_CPPv3IDpEN4asap3fsm4WillE"></span><span id="_CPPv2IDpEN4asap3fsm4WillE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">Handlers</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structasap_1_1fsm_1_1_will"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Will</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4IDpEN4asap3fsm4WillE" title="asap::fsm::Will::Handlers"><span class="n"><span class="pre">Handlers</span></span></a><a class="headerlink" href="#_CPPv4IDpEN4asap3fsm4WillE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Base type for states to automate pulling all handlers from all base classes. </p>
+<p><strong>Example</strong></p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">EventOne</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">EventTwo</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">EventThree</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">Machine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateMachine</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">FirstState</span><span class="w"></span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">On</span><span class="o">&lt;</span><span class="n">EventOne</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpecialAction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Execute</span><span class="p">(</span><span class="n">Machine</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*machine*/</span><span class="p">,</span><span class="w"> </span><span class="n">SecondState</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*state*/</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">EventTwo</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">Continue</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">SecondState</span><span class="w"></span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">Will</span><span class="o">&lt;</span><span class="n">ByDefault</span><span class="o">&lt;</span><span class="n">DoNothing</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">On</span><span class="o">&lt;</span><span class="n">EventThree</span><span class="p">,</span><span class="w"> </span><span class="n">TransitionTo</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">Will</span><span class="o">::</span><span class="n">Handle</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// A dedicated overload of `Handle` for the special event ensures</span>
+<span class="w">    </span><span class="c1">// that it is not using the `ByDefault` action.</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">Handle</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">EventTwo</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/*event*/</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">SpecialAction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">SpecialAction</span><span class="p">{};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">Machine</span><span class="w"> </span><span class="n">machine</span><span class="p">{</span><span class="n">FirstState</span><span class="p">{},</span><span class="w"> </span><span class="n">SecondState</span><span class="p">{}};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">EXPECT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">EventOne</span><span class="p">{});</span><span class="w"></span>
+<span class="w">  </span><span class="n">EXPECT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">EventTwo</span><span class="p">{});</span><span class="w"> </span><span class="c1">// SpecialAction `Execute` called</span>
+<span class="w">  </span><span class="n">EXPECT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">SecondState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">machine</span><span class="p">.</span><span class="n">Handle</span><span class="p">(</span><span class="n">EventThree</span><span class="p">{});</span><span class="w"></span>
+<span class="w">  </span><span class="n">EXPECT_THAT</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">IsIn</span><span class="o">&lt;</span><span class="n">FirstState</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">IsTrue</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../api.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">API reference</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../license.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">License</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+        &copy; Copyright 2018, The Authors.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

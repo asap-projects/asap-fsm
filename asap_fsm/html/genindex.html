@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ASAP common’s documentation &#8212; Common</title>
+    <title>Index &#8212; Finite State Machine</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -36,9 +36,8 @@
     <script src="_static/copybutton.js"></script>
     <script src="_static/sphinx-book-theme.9d8b4a8b9bb19db25eeaddc40d639ba2.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API reference" href="api.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -63,7 +62,7 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation " id="site-navigation">
     
         <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="#">
+    <a class="navbar-brand text-wrap" href="index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
@@ -72,7 +71,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Common</h1>
+      <h1 class="site-logo" id="site-title">Finite State Machine</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -92,28 +91,8 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="api/platform.html">
-     Platform detection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/compilers.html">
-     Compiler detection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/flags.html">
-     Mask/Flags manipulation
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/overload.html">
-     Overload pattern
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/mixin.html">
-     Mixin library
+    <a class="reference internal" href="api/fsm.html">
+     State Machine library
     </a>
    </li>
   </ul>
@@ -157,23 +136,6 @@
                 
             </div>
             
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/index.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
             <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -185,7 +147,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/asap-projects/asap-fsm/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/asap-projects/asap-fsm/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -206,28 +168,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parts-of-the-documentation">
-   Parts of the documentation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#api-reference">
-     <span class="xref std std-doc">
-      API reference
-     </span>
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -235,57 +175,60 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>ASAP common’s documentation</h1>
+                <h1></h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parts-of-the-documentation">
-   Parts of the documentation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#api-reference">
-     <span class="xref std std-doc">
-      API reference
-     </span>
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="section" id="asap-common-s-documentation">
-<h1>ASAP common’s documentation<a class="headerlink" href="#asap-common-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ 
 </div>
-<p>Welcome! This is the documentation for the <em>common</em> module, part of the <em>asap</em>
-project. This is a core module on which the other modules depend to get access
-to low level and frequently needed features such as platform/environment
-detection, assertions and C++ language features not consistently provided by
-all compilers on all platforms.</p>
-<div class="section" id="parts-of-the-documentation">
-<h2>Parts of the documentation<a class="headerlink" href="#parts-of-the-documentation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="api-reference">
-<h3><a class="reference internal" href="api.html"><span class="doc">API reference</span></a><a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h3>
-<p><em>check this out to see the documentation of classes, macros, etc. offered by
-this module</em></p>
-</div>
-</div>
-</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fsm.html#_CPPv4I0EN4asap3fsm9ByDefaultE">asap::fsm::ByDefault (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4N4asap3fsm9DoNothingE">asap::fsm::DoNothing (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4I0EN4asap3fsm9is_one_ofE">asap::fsm::is_one_of (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4I0EN4asap3fsm5MaybeE">asap::fsm::Maybe (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4I00EN4asap3fsm2OnE">asap::fsm::On (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4IDpEN4asap3fsm5OneOfE">asap::fsm::OneOf (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4N4asap3fsm11ReportErrorE">asap::fsm::ReportError (C++ struct)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/fsm.html#_CPPv4IDpEN4asap3fsm12StateMachineE">asap::fsm::StateMachine (C++ class)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4N4asap3fsm17StateMachineErrorE">asap::fsm::StateMachineError (C++ class)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4N4asap3fsm17StateMachineError4ImplE">asap::fsm::StateMachineError::Impl (C++ class)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4NK4asap3fsm17StateMachineError4WhatEv">asap::fsm::StateMachineError::What (C++ function)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4I0DpEN4asap3fsm20supports_alternativeEbv">asap::fsm::supports_alternative (C++ function)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4I0EN4asap3fsm12TransitionToE">asap::fsm::TransitionTo (C++ struct)</a>
+</li>
+      <li><a href="api/fsm.html#_CPPv4IDpEN4asap3fsm4WillE">asap::fsm::Will (C++ struct)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 
 
               </div>
@@ -293,13 +236,6 @@ this module</em></p>
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="api.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API reference</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
             
         </div>

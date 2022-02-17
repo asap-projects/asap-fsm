@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ASAP common’s documentation &#8212; Common</title>
+    <title>Changelog &#8212; Start Now!</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -38,7 +38,8 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API reference" href="api.html" />
+    <link rel="next" title="Version" href="version.html" />
+    <link rel="prev" title="License" href="license.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -63,7 +64,7 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation " id="site-navigation">
     
         <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="#">
+    <a class="navbar-brand text-wrap" href="index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
@@ -72,7 +73,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Common</h1>
+      <h1 class="site-logo" id="site-title">Start Now!</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -80,47 +81,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="api.html">
-   API
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/platform.html">
-     Platform detection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/compilers.html">
-     Compiler detection
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/flags.html">
-     Mask/Flags manipulation
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/overload.html">
-     Overload pattern
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="api/mixin.html">
-     Mixin library
-    </a>
-   </li>
-  </ul>
- </li>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="license.html">
    License
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Changelog
   </a>
  </li>
  <li class="toctree-l1">
@@ -165,9 +134,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/index.rst.txt"><button type="button"
+        <a class="dropdown-buttons" href="_sources/changelog.md.txt"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -185,7 +154,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/asap-projects/asap-fsm/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/asap-projects/asap-fsm/issues/new?title=Issue%20on%20page%20%2Fchangelog.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -212,15 +181,13 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parts-of-the-documentation">
-   Parts of the documentation
+  <a class="reference internal nav-link" href="#id1">
+   1.0.0 (2022-02-17)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#api-reference">
-     <span class="xref std std-doc">
-      API reference
-     </span>
+    <a class="reference internal nav-link" href="#features">
+     Features
     </a>
    </li>
   </ul>
@@ -235,7 +202,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>ASAP common’s documentation</h1>
+                <h1>Changelog</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -246,15 +213,13 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parts-of-the-documentation">
-   Parts of the documentation
+  <a class="reference internal nav-link" href="#id1">
+   1.0.0 (2022-02-17)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#api-reference">
-     <span class="xref std std-doc">
-      API reference
-     </span>
+    <a class="reference internal nav-link" href="#features">
+     Features
     </a>
    </li>
   </ul>
@@ -268,21 +233,21 @@
             
               <div>
                 
-  <div class="section" id="asap-common-s-documentation">
-<h1>ASAP common’s documentation<a class="headerlink" href="#asap-common-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-<p>Welcome! This is the documentation for the <em>common</em> module, part of the <em>asap</em>
-project. This is a core module on which the other modules depend to get access
-to low level and frequently needed features such as platform/environment
-detection, assertions and C++ language features not consistently provided by
-all compilers on all platforms.</p>
-<div class="section" id="parts-of-the-documentation">
-<h2>Parts of the documentation<a class="headerlink" href="#parts-of-the-documentation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="api-reference">
-<h3><a class="reference internal" href="api.html"><span class="doc">API reference</span></a><a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h3>
-<p><em>check this out to see the documentation of classes, macros, etc. offered by
-this module</em></p>
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<p>All notable changes to this project will be documented in this file. See <a class="reference external" href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
+<div class="section" id="id1">
+<h2><a class="reference external" href="http://github.com/abdes/asap/compare/v4.0.2...v1.0.0">1.0.0</a> (2022-02-17)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>initial version (<a class="reference external" href="http://github.com/abdes/asap/commit/0b893726ab41f7454d5fd1618d0be8f6a92cca43">0b89372</a>)</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fsm</span></code> module provides a template-based framework for implementing
+finite state machines in C++. States, their transitions and event
+handlers are statically typed for maximum compile-time enforcement
+of the valid transitions.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -292,11 +257,18 @@ this module</em></p>
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="api.html" title="next page">
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="license.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">License</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="version.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API reference</p>
+        <p class="prev-next-title">Version</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
