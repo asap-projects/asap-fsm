@@ -124,8 +124,8 @@ html_theme_options = {
 
 intersphinx_mapping = {
     'fsm': (
-        '@SPHINX_BUILD_DIR@/asap_fsm/html',
-        '@SPHINX_BUILD_DIR@/asap_fsm/html/objects.inv')
+        'https://asap-projects.github.io/asap-fsm/asap_fsm/html',
+      '@SPHINX_BUILD_DIR@/asap_fsm/html/objects.inv')
 }
 
 # -- Options for todo extension ----------------------------------------------
