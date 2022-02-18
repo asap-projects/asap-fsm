@@ -10,12 +10,19 @@
 API reference
 *************
 
+The state machine API is provided through the classes and types in the
+<fsm/fsm.h> header file. Use the table of contents navigation on the
+left for detailed descriptions of the classes and their functionality.
+
 .. toctree::
    :maxdepth: 2
    :hidden:
 
-   State Machine library <api/fsm>
+   State Machine <api/statemachine>
+   Actions <api/actions>
+   State Helpers <api/state-helpers>
+   Exceptions <api/exceptions>
 
-The state machine API is provided through the classes and types in the
-<fsm/fsm.h> header file. Detailed descriptions of the classes and their
-functionality are provided in the <api/fsm> document.
+.. doxygennamespace:: asap::fsm
+   :outline:
+   :no-link:
