@@ -2,14 +2,14 @@
 
 ![Start Now!!](doc/_static/logo.png "ASAP Logo")
 
-[![Linux Build (Ubuntu latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml/badge.svg?branch=develop)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml)
-[![Windows Build (latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml/badge.svg?branch=develop)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml)
+[![Linux Build (Ubuntu latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml)
+[![Windows Build (latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml)
 
 ## [Project Documentation](https://asap-projects.github.io/asap-fsm/)
 
 ## Overview
 
-This is a template-based implementation of state machines. The FSM has a 
+This is a C++ template-based implementation of state machines. The FSM has a 
 set of possible states and a set of rules that govern transitions between 
 the current state and some other state upon receiving an event.
 
@@ -28,12 +28,9 @@ dependencies between the state types and the state machine type, a state's
 will describe what action should the machine take.
 
 Events are produced outside the state machine and fed into it by an external
-event loop which calls the state machine's `Handle()` method. The latter
+event loop which calls the state machine's `Handle` method. The latter
 dispatches the event to the current state, which returns a specific action
-that gets executed to eventually transition to a new state. Event handlers,
-the action execution, and anything inside could throw exceptions to report
-errors that are *all* caught and translated into an execution status returned
-to the event production loop.
+that gets executed to eventually transition to a new state.
 
 Examples and detailed documentation of the API can be found at the
 [Project Documentation](https://asap-projects.github.io/asap-fsm/) pages.
@@ -74,6 +71,7 @@ or just use one of the predefined `CMake` presets. Detailed instructions and
 many useful commands are listed 
 [here](https://abdes.github.io/asap/master/html/01-getting-started/useful-commands.html).
 
+### CMake configurable build options 
 
 ```cmake
 # Project options
