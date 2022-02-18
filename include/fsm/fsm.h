@@ -259,8 +259,8 @@ public:
    * \return *true* if the State Machine's current state is the state being
    * checked for; *false* otherwise.
    */
-  template <typename State> auto IsIn() -> bool {
-    State &state = std::get<State>(states_);
+  template <typename State> [[nodiscard]] auto IsIn() const -> bool {
+    const State &state = std::get<State>(states_);
     try {
       return std::get<State *>(current_state_) == &state;
     } catch (const std::bad_variant_access & /*error*/) {
