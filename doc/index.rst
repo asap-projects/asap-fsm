@@ -46,5 +46,5 @@ Parts of the documentation
 
 :doc:`API reference <api>`
 ------------------------------
-*check this out to see the documentation of classes, macros, etc. offered by
-this module*
+  *check this out to see the documentation of classes, macros, etc. offered by
+  this module*
