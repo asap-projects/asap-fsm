@@ -33,7 +33,7 @@ namespace {
 //! [Full State Machine Example]
 /*
  * This example simulates a door with an electronic lock. When the door
- * is locked, the user choses a lock code that needs to be re-entered
+ * is locked, the user chooses a lock code that needs to be re-entered
  * to unlock it.
  */
 
