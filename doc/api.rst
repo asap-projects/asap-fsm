@@ -22,7 +22,3 @@ left for detailed descriptions of the classes and their functionality.
    Actions <api/actions>
    State Helpers <api/state-helpers>
    Exceptions <api/exceptions>
-
-.. doxygennamespace:: asap::fsm
-   :outline:
-   :no-link:
