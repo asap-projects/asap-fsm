@@ -6,15 +6,6 @@
      ^ for sub-subsections
      " for paragraphs
 
-*********************
-Finite State Machines
-*********************
-
-The header <common/fsm.h> provides a template based framework to implement
-finite state machines in C++.
-
-.. doxygenclass:: asap::fsm::StateMachine
-
 State Machine Actions
 =====================
 
@@ -46,31 +37,3 @@ compile-time types and rules.
 .. doxygenstruct:: asap::fsm::is_one_of
 
 .. doxygenfunction:: asap::fsm::supports_alternative
-
-State Machine Exceptions
-========================
-
-While state event handlers use primarily the asap::fsm::ReportError action to
-transmit errors to the state machine, other places in the implementation such as
-the OnEnter() or OnLeave() methods in states do not have access to actions, and
-therefore report errors as exceptions.
-
-.. doxygenclass:: asap::fsm::StateMachineError
-   :members:
-
-State Machine State Types
-=========================
-
-A number of helper base classes for implementing states are provided. These are
-intended for simplifying typical obvious event processing cases and for allowing
-to easily implement the unique interface of event handlers always returning an
-Action.
-
-.. doxygenstruct:: asap::fsm::On
-   :members:
-
-.. doxygenstruct:: asap::fsm::ByDefault
-   :members:
-
-.. doxygenstruct:: asap::fsm::Will
-   :members:

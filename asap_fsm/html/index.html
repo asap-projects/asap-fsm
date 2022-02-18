@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ASAP State Machine module documentation &#8212; Finite State Machine</title>
+    <title>ASAP State Machine module documentation &#8212; Module: fsm</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API reference" href="api.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -72,7 +72,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Finite State Machine</h1>
+      <h1 class="site-logo" id="site-title">Module: fsm</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -82,8 +82,8 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="api.html">
-   API
+  <a class="reference internal" href="tutorial.html">
+   Tutorial
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -92,8 +92,50 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="api/fsm.html">
-     State Machine library
+    <a class="reference internal" href="tutorial/basic.html">
+     Basic door
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorial/robust.html">
+     Robust door
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorial/secure.html">
+     Secure door
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="api.html">
+   API
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/statemachine.html">
+     State Machine
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/actions.html">
+     Actions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/state-helpers.html">
+     State Helpers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/exceptions.html">
+     Exceptions
     </a>
    </li>
   </ul>
@@ -253,8 +295,29 @@
 <div class="toctree-wrapper compound">
 </div>
 <p>Welcome! This is the documentation for the <em>fsm</em> module, part of the <em>asap</em>
-project. This is a feature module provide a framework to quickly build type safe
-state machines using C++17 and templates.</p>
+project. This is a feature module providing a framework to quickly build type
+safe state machines using C++17 and templates.</p>
+<p>A state machine has a set of possible states and a set of rules that govern
+transitions between the current state and some other state upon receiving an
+event.</p>
+<p>A state can be an arbitrary object, which type is used to distinguish it from
+other states. Therefore, there is no need to maintain a list of known states
+(in an enumeration for example). We also don’t want to enforce any
+relationship between those types to keep them completely independent. The
+state machine is a variadic template that gets to know its states through the
+parameter pack and stores them in a tuple.</p>
+<p>Transitions from the current state to other states are triggered by events.
+This requires that all the state types have a <cite>Handle</cite> method that accepts an
+event of the type of event being handled. To avoid creating unnecessary
+dependencies between the state types and the state machine type, a state’s
+<cite>Handle</cite> method will return an object of a specific type (an action) that
+will describe what action should the machine take.</p>
+<p>Events are produced outside the state machine and fed into it by an external
+event loop which calls the state machine’s <cite>Handle</cite> method. The latter
+dispatches the event to the current state, which returns a specific action
+that gets executed to eventually transition to a new state.</p>
+<p>Examples and detailed documentation of the API can be found at the
+[Project Documentation](<a class="reference external" href="https://asap-projects.github.io/asap-fsm/">https://asap-projects.github.io/asap-fsm/</a>) pages.</p>
 <div class="section" id="parts-of-the-documentation">
 <h2>Parts of the documentation<a class="headerlink" href="#parts-of-the-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="api-reference">
@@ -271,10 +334,10 @@ this module</em></p>
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="api.html" title="next page">
+    <a class='right-next' id="next-link" href="tutorial.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API reference</p>
+        <p class="prev-next-title">Tutorial</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
