@@ -12,10 +12,15 @@
 
 #include <common/compilers.h>
 #include <fsm/fsm.h>
-#include <gsl/gsl>
 
 #include <stdexcept>
 #include <utility>
+
+// Warnings free memory allocation without full dependency on GSL implementation
+namespace gsl {
+template <class T, class = std::enable_if_t<std::is_pointer<T>::value>>
+using owner = T;
+} // namespace gsl
 
 namespace asap::fsm {
 
@@ -45,7 +50,7 @@ private:
 // warning :-)
 StateMachineError::Impl::~Impl() = default;
 
-StateMachineError::StateMachineError() : pimpl(new Impl()) {
+StateMachineError::StateMachineError() : pimpl(gsl::owner<Impl *>(new Impl())) {
 }
 
 StateMachineError::StateMachineError(std::string description)
@@ -53,7 +58,7 @@ StateMachineError::StateMachineError(std::string description)
 }
 
 StateMachineError::StateMachineError(const StateMachineError &other)
-    : pimpl(new Impl(*other.pimpl)) {
+    : pimpl(gsl::owner<Impl *>(new Impl(*other.pimpl))) {
 }
 
 StateMachineError::StateMachineError(StateMachineError &&other) noexcept
@@ -67,7 +72,6 @@ auto StateMachineError::operator=(const StateMachineError &rhs)
     return *this;
   }
   delete pimpl;
-  pimpl = nullptr;
   pimpl = gsl::owner<Impl *>(new Impl(*rhs.pimpl));
   return *this;
 }
@@ -96,7 +100,7 @@ auto StateMachineError::What() const -> const char * {
 }
 
 void StateMachineError::What(std::string description) {
-  pimpl->What(description);
+  pimpl->What(std::move(description));
 }
 
 auto DoNothing::data() noexcept -> const std::any & {
