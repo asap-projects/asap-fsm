@@ -47,8 +47,6 @@ set(MODULE_TARGET_NAME "asap_${META_MODULE_NAME}")
 
 asap_add_library(${MODULE_TARGET_NAME} INTERFACE WARNING)
 
-target_link_libraries(${MODULE_TARGET_NAME} INTERFACE Microsoft.GSL::GSL)
-
 target_include_directories(
   ${MODULE_TARGET_NAME}
   INTERFACE $<INSTALL_INTERFACE:include>
@@ -71,9 +69,9 @@ asap_create_module_config_files()
 # Tests
 # ------------------------------------------------------------------------------
 
-if(ASAP_BUILD_TESTS)
-  add_subdirectory(test)
-endif()
+#if(ASAP_BUILD_TESTS)
+#  add_subdirectory(test)
+#endif()
 
 # ------------------------------------------------------------------------------
 # API Documentation
