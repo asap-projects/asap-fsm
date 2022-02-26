@@ -339,7 +339,8 @@ add_subdirectory(fsm)
 # ==============================================================================
 
 asap_setup_clang_format()
-asap_create_clang_tidy_targets()
+# Enable this target when the project has library with source files (.cpp)
+#asap_create_clang_tidy_targets()
 
 # ==============================================================================
 # Deployment (global project files)
