@@ -125,8 +125,8 @@ html_theme_options = {
 intersphinx_mapping = {
     # Add inter-sphinx config for submodules and third party libs
     'common': (
-        'https://asap-projects.github.io/asap-common/html',
-        'https://asap-projects.github.io/asap-common/html/objects.inv'),
+        'https://asap-projects.github.io/asap-common/asap_common/html',
+        'https://asap-projects.github.io/asap-common/asap_common/html/objects.inv'),
     'fsm': (
         'https://asap-projects.github.io/asap-fsm/asap_fsm/html',
         '@SPHINX_BUILD_DIR@/asap_fsm/html/objects.inv')
