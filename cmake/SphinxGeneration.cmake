@@ -32,8 +32,11 @@ if(SPHINX_FOUND)
   message(STATUS "System has sphinx.")
 
   # Add a master sphinx target to collect all submodules
-  add_custom_target(sphinx)
-  set_target_properties(sphinx PROPERTIES EXCLUDE_FROM_ALL TRUE)
+  add_custom_target(${META_PROJECT_ID}_all_sphinx)
+  # We only build documentation through explicit invocation of the sphinx target
+  # as it is pretty heavy and requires doxygen to be run before it is invoked.
+  set_target_properties(${META_PROJECT_ID}_all_sphinx PROPERTIES EXCLUDE_FROM_ALL
+                                                               TRUE)
 
   # The macro to add a submodule as a sphinx target.
   macro(asap_with_sphinx TARGET_NAME)
@@ -60,12 +63,9 @@ if(SPHINX_FOUND)
                                                            TRUE)
     # Finally add the module sphinx target as a dependency for the overall
     # sphinx target
-    add_dependencies(sphinx ${TARGET_NAME}_sphinx)
+    add_dependencies(${META_PROJECT_ID}_all_sphinx ${TARGET_NAME}_sphinx)
 
   endmacro()
-  # We only build documentation through explicit invocation of the sphinx target
-  # as it is pretty heavy and requires doxygen to be run before it is invoked.
-  set_target_properties(sphinx PROPERTIES EXCLUDE_FROM_ALL TRUE)
 
 else(SPHINX_FOUND)
   message(STATUS "WARNING: sphinx is not available on this system!")

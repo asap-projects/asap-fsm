@@ -32,15 +32,15 @@ endif()
 
 # Meta information about the project
 # cmake-format: off
-set(META_PROJECT_NAME        "asap")
-set(META_PROJECT_DESCRIPTION "Instantly start with a fully loaded CMake project")
+set(META_PROJECT_NAME        "asap-fsm")
+set(META_PROJECT_DESCRIPTION "C++ template-based Finite State Machines.")
 set(META_AUTHOR_ORGANIZATION "The Authors")
-set(META_GITHUB_REPO         "https://github.com/abdes/asap")
-set(META_AUTHOR_DOMAIN       "https://github.com/abdes/asap")
+set(META_GITHUB_REPO         "https://github.com/asap-projects/asap-fsm")
+set(META_AUTHOR_DOMAIN       "https://github.com/asap-projects")
 set(META_AUTHOR_MAINTAINER   "Abdessattar Sassi")
-set(META_VERSION_MAJOR       "4")
-set(META_VERSION_MINOR       "1")
-set(META_VERSION_PATCH       "1")
+set(META_VERSION_MAJOR       "1")
+set(META_VERSION_MINOR       "0")
+set(META_VERSION_PATCH       "0")
 set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
@@ -48,7 +48,7 @@ set(META_CMAKE_INIT_SHA      "${GIT_REV}")
 # cmake-format: on
 
 string(MAKE_C_IDENTIFIER ${META_PROJECT_NAME} META_PROJECT_ID)
-string(TOUPPER ${META_PROJECT_ID} META_PROJECT_ID)
+string(TOLOWER ${META_PROJECT_ID} META_PROJECT_ID)
 
 # Determine if this is built as a subproject  or if it is the master project.
 if(NOT DEFINED ${META_PROJECT_ID}_MASTER_PROJECT)
@@ -96,9 +96,9 @@ project(
   LANGUAGES C CXX)
 
 # Set output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Create version file
 file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
@@ -225,6 +225,27 @@ endif()
 # Third party modules
 # ------------------------------------------------------------------------------
 
+include(FetchContent)
+# We make sure that we have 'third_party' in the name so that the targets get
+# excluded from the generated target lists for the various tools.
+set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/third_party_deps)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG # GoogleTest now follows the Abseil Live at Head philosophy. We
+          # recommend using the latest commit in the main branch in your
+          # projects.
+          origin/main)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt
+    ON
+    CACHE BOOL "" FORCE)
+set(INSTALL_GTEST
+    OFF
+    CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+include(GoogleTest)
+
 add_subdirectory(third_party)
 
 # ------------------------------------------------------------------------------
@@ -265,27 +286,6 @@ enable_testing()
 asap_add_code_coverage_all_targets(EXCLUDE */test/* *googlemock* *googletest*
                                    /usr/*)
 
-include(FetchContent)
-# We make sure that we have 'third_party' in the name so that the targets get
-# excluded from the generated target lists for the various tools.
-set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/third_party_deps)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG # GoogleTest now follows the Abseil Live at Head philosophy. We
-          # recommend using the latest commit in the main branch in your
-          # projects.
-          origin/main)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt
-    ON
-    CACHE BOOL "" FORCE)
-set(INSTALL_GTEST
-    OFF
-    CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-include(GoogleTest)
-
 # ==============================================================================
 # Documentation - doxygen, sphinx/breathe/exhale
 # ==============================================================================
@@ -300,24 +300,27 @@ include(SphinxGeneration)
 
 # Setup sphinx doc master target and add other submodules as dependencies
 if(SPHINX_FOUND)
-  asap_with_sphinx(master)
+  asap_with_sphinx(${META_PROJECT_ID}_master)
 
   # Add a target for copying the index.html from the doc dir to the sphinx build
   # dir. A dependency on this target will be added to the master sphinx target.
-  add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/doc/index.html
-            ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/index.html)
-  add_custom_target(copy_doc_index ALL
-                    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html)
+  # !! Only if this is the master project
+  if(${META_PROJECT_ID}_MASTER_PROJECT)
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html
+      COMMAND
+        ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/doc/index.html
+        ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/index.html)
+    add_custom_target(copy_doc_index ALL
+                      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/sphinx/index.html)
 
-  add_dependencies(
-    master_sphinx
-    copy_doc_index
-    # Add more submodule documentation targets after this, using variables in
-    # the target names consistently with the module's CMakeLists.txt.
-  )
+    add_dependencies(
+      ${META_PROJECT_ID}_master_sphinx copy_doc_index
+      # Add more submodule documentation targets after this, using variables in
+      # the target names consistently with the module's CMakeLists.txt.
+    )
+  endif()
 
 endif()
 
@@ -325,7 +328,7 @@ endif()
 # Project modules
 # ==============================================================================
 
-# Add project modules here
+add_subdirectory(fsm)
 
 # ==============================================================================
 # Code analyzers: clang-tidy, cppcheck, valgrind, sanitizers, etc...

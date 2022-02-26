@@ -1,31 +1,55 @@
 .. Structure conventions
-     # with overline, for parts
-     * with overline, for chapters
-     = for sections
-     - for subsections
-     ^ for sub-subsections
-     " for paragraphs
+# with overline, for parts
+* with overline, for chapters
+= for sections
+- for subsections
+^ for sub-subsections
+" for paragraphs
 
-###############
-Library Modules
-###############
+#########################################
+ASAP Finite State Machines documentation!
+#########################################
+
+.. |date| date::
+
+Last Updated on |date|
 
 .. toctree::
    :maxdepth: 2
    :titlesonly:
    :hidden:
 
-..
-  Add modules below, for example:
+   license
+   changelog.md
+   version
 
-  Module: common <https://abdes.github.io/asap/asap_common/html/>
-  Module: contract <https://abdes.github.io/asap/asap_contract/html/>
+Welcome! This is the documentation for the
+`asap-fsm <https://github.com/asap-projects/asap-fsm>`_ |version| project.
 
-  The `asap` projects comes with two built-in modules, offering some core basic
-  functionality:
+This is a build container for the :doc:`fsm <fsm:index>` module. It uses the
+`asap <https://github.com/abdes/asap>`_ integrated build system and follows
+its development workflow.
 
-    :doc:`common <common:index>`
-    ============================
-      *offers some core and low level features such as platform/environment
-      detection and C++ language features not consistently provided by all
-      compilers on all platforms.*
+Parts of the documentation
+==========================
+
+:doc:`fsm <fsm:api>`
+--------------------
+     *start here to understand the classes provided by the library and how to use
+     them to build your own state machine.*
+
+`Developer Guides <https://abdes.github.io/asap/master/html/project-development/index.html>`_
+---------------------------------------------------------------------------------------------
+     *head over to the `asap` project documentation for detailed guides on how to
+     build and maintain the different targets in this project.*
+
+Acknowledgements
+================
+
+.. figure:: https://executablebooks.org/en/latest/_static/logo-wide.png
+  :figclass: margin
+  :alt: Executable Books Project
+  :name: executable_book_logo
+
+This documentation uses the theme provided by the `Executable Books Project
+<https://executablebooks.org/>`_ Project.
