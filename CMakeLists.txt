@@ -88,6 +88,8 @@ set(IDE_FOLDER "${META_PROJECT_NAME}")
 project(
   ${META_PROJECT_NAME}
   VERSION ${META_VERSION}
+  DESCRIPTION ${META_PROJECT_DESCRIPTION}
+  HOMEPAGE_URL ${META_GITHUB_REPO}
   LANGUAGES C CXX)
 
 # Set output directories
@@ -195,7 +197,6 @@ configure_file(.clangd.in ${CMAKE_SOURCE_DIR}/.clangd @ONLY)
 # enable CTest.  This will set BUILD_TESTING to ON unless otherwise specified on
 # the command line
 include(CTest)
-enable_testing()
 asap_add_code_coverage_all_targets(EXCLUDE */test/* *googlemock* *googletest*
                                    /usr/*)
 
