@@ -18,6 +18,7 @@ using asap::fsm::Status;
 using asap::fsm::TransitionTo;
 using asap::fsm::Will;
 
+namespace {
 struct OpenEvent {};
 struct CloseEvent {};
 
@@ -94,6 +95,7 @@ struct LockedState : ByDefault<DoNothing> {
 private:
   uint32_t key_;
 };
+} // namespace
 
 using Door = StateMachine<ClosedState, LockedState, OpenState>;
 

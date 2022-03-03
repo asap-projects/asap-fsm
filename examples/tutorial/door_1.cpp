@@ -15,6 +15,7 @@ using asap::fsm::StateMachine;
 using asap::fsm::TransitionTo;
 using asap::fsm::Will;
 
+namespace {
 struct OpenEvent {};
 struct CloseEvent {};
 
@@ -39,6 +40,7 @@ void PrintDoorState(const Door &door) {
   std::cout << "   > door is " << (door.IsIn<OpenState>() ? "open" : "closed")
             << "\n";
 }
+} // namespace
 
 auto main() -> int {
   Door door{ClosedState{}, OpenState{}};
