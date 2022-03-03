@@ -2,8 +2,7 @@
 
 ![Start Now!!](doc/_static/logo.png "ASAP Logo")
 
-[![Linux Build (Ubuntu latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-fsm/actions/workflows/linux-build.yml)
-[![Windows Build (latest)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-fsm/actions/workflows/windows-build.yml)
+[![Build Matrix](https://github.com/asap-projects/asap-fsm/actions/workflows/cmake-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-fsm/actions/workflows/cmake-build.yml)
 
 ## [Project Documentation](https://asap-projects.github.io/asap-fsm/)
 
