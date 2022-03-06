@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * initial version ([0b89372](http://github.com/abdes/asap/commit/0b893726ab41f7454d5fd1618d0be8f6a92cca43))
-    
+
   The `fsm` module provides a template-based framework for implementing
   finite state machines in C++. States, their transitions and event
   handlers are statically typed for maximum compile-time enforcement
