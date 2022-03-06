@@ -9,6 +9,10 @@
 State Machine Exceptions
 ========================
 
+.. |date| date::
+
+Last Updated on |date|
+
 While state event handlers use primarily the asap::fsm::ReportError action to
 transmit errors to the state machine, other places in the implementation such as
 the OnEnter() or OnLeave() methods in states do not have access to actions, and
