@@ -10,6 +10,10 @@
 API reference
 *************
 
+.. |date| date::
+
+Last Updated on |date|
+
 The state machine API is provided through the classes and types in the
 <fsm/fsm.h> header file. Use the table of contents navigation on the
 left for detailed descriptions of the classes and their functionality.
