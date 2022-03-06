@@ -182,6 +182,16 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
+   1.0.1 (2022-03-06)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bug-fixes">
+   Bug Fixes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
    1.0.0 (2022-02-17)
   </a>
   <ul class="nav section-nav flex-column">
@@ -214,6 +224,16 @@
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
+   1.0.1 (2022-03-06)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bug-fixes">
+   Bug Fixes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
    1.0.0 (2022-02-17)
   </a>
   <ul class="nav section-nav flex-column">
@@ -237,7 +257,34 @@
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <p>All notable changes to this project will be documented in this file. See <a class="reference external" href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
 <div class="section" id="id1">
-<h2><a class="reference external" href="http://github.com/abdes/asap/compare/v4.0.2...v1.0.0">1.0.0</a> (2022-02-17)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference external" href="http://github.com/abdes/asap/compare/v1.0.0...v1.0.1">1.0.1</a> (2022-03-06)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="bug-fixes">
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>always use top level build dir for output (<a class="reference external" href="http://github.com/abdes/asap/commit/1b01db2402bc52944646bcde3cf525315a4e0e1b">1b01db2</a>)</p></li>
+<li><p>doxygen and sphinx target conflict with modules (<a class="reference external" href="http://github.com/abdes/asap/commit/02375ff4a33e34a8e0cb9307ef4eb6de3271e945">02375ff</a>)</p></li>
+<li><p>generate doc only if project is master (<a class="reference external" href="http://github.com/abdes/asap/commit/82190fa6562f5e51dbbab660bcab8dc265e99a0b">82190fa</a>)</p></li>
+<li><p>make doxygen targets sub-project friendly (<a class="reference external" href="http://github.com/abdes/asap/commit/546fe73ded53721dddbac311e9db41e4146b8ad2">546fe73</a>)</p></li>
+<li><p>make gtest work again (<a class="reference external" href="http://github.com/abdes/asap/commit/3ce658c5f1eb216a3286717e7f80827b96ff3b49">3ce658c</a>)</p></li>
+<li><p>make sphinx targets sub-project friendly (<a class="reference external" href="http://github.com/abdes/asap/commit/024cc77d17ed134ed5f3f4eea32226b07b05aad6">024cc77</a>)</p></li>
+<li><p>only add clang-format/tidy targets if master project (<a class="reference external" href="http://github.com/abdes/asap/commit/060f082714e039eb4c2c2e198b5caed74690e8af">060f082</a>)</p></li>
+<li><p>only add sanitizers if building tests (<a class="reference external" href="http://github.com/abdes/asap/commit/7625caac88429996e0962b95f3a26d536e6cb49e">7625caa</a>)</p></li>
+<li><p>only install files if requested to install (<a class="reference external" href="http://github.com/abdes/asap/commit/9caaf9b47e138be3f9845d6d58ebc21ff8dfa83b">9caaf9b</a>)</p></li>
+<li><p>reorganize third_party modules for use of FetchContent (<a class="reference external" href="http://github.com/abdes/asap/commit/cc65bc2219dbe38197107bae71252444994e118c">cc65bc2</a>)</p></li>
+<li><p>use correct path for the master docs (<a class="reference external" href="http://github.com/abdes/asap/commit/3e01ccd05d2daa2aade55dddd70c1c43f6d2d3e1">3e01ccd</a>)</p></li>
+<li><p>use correct targets for doc builds (<a class="reference external" href="http://github.com/abdes/asap/commit/fae6b2d002900e7bbdf273a9e99ba700d93cfae0">fae6b2d</a>)</p></li>
+<li><p>use correct targets for doc builds (<a class="reference external" href="http://github.com/abdes/asap/commit/559558e8eac3043eef19986cc2ae6d6dfd937be8">559558e</a>)</p></li>
+<li><p>use correct url for <code class="docutils literal notranslate"><span class="pre">common</span></code> inter-sphinx (<a class="reference external" href="http://github.com/abdes/asap/commit/8ed6100f818f7fe8e6af2a118c3c9f4be983aa74">8ed6100</a>)</p></li>
+<li><p>use correct url for <code class="docutils literal notranslate"><span class="pre">common</span></code> sphinx docs (<a class="reference external" href="http://github.com/abdes/asap/commit/cb7725706540c28f6847472f2524285a1a994307">cb77257</a>)</p></li>
+<li><p>use correct url for logo image (<a class="reference external" href="http://github.com/abdes/asap/commit/96d1e01d971bd2f33faaebfc060082023f3a5209">96d1e01</a>)</p></li>
+<li><p>use correct url for master index page (<a class="reference external" href="http://github.com/abdes/asap/commit/a56c327ff3d7ab14d7a499fc4997279efd2647fe">a56c327</a>)</p></li>
+<li><p>use lower case META_PROJECT_ID (<a class="reference external" href="http://github.com/abdes/asap/commit/311e433e8698ff6385c2cda256bff83982596ed0">311e433</a>)</p></li>
+<li><p>wrong variable used for target name (<a class="reference external" href="http://github.com/abdes/asap/commit/829f351d22b384ddc060ae2df47ff9e801089dd2">829f351</a>)</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="reference external" href="http://github.com/abdes/asap/compare/v4.0.2...v1.0.0">1.0.0</a> (2022-02-17)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="features">
 <h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <ul>
