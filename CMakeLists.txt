@@ -97,9 +97,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Create version file
-file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
-
 # ------------------------------------------------------------------------------
 # Additional CMake modules
 # ------------------------------------------------------------------------------
@@ -163,25 +160,13 @@ set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/third_party_deps)
 if(ASAP_BUILD_TESTS)
   include(GoogleSanitizers)
   include(CodeCoverage)
+  # Enable this target when the project has test cases
   asap_add_code_coverage_all_targets(EXCLUDE */test/* *googlemock* *googletest*
                                      /usr/*)
   include(Valgrind)
-
   include(FetchGoogleTest)
   include(GoogleTest)
   include(CTest)
-endif()
-
-# ------------------------------------------------------------------------------
-# Code analyzers: clang-tidy, cppcheck, valgrind, sanitizers, etc...
-# ------------------------------------------------------------------------------
-
-if(${META_PROJECT_ID}_IS_MASTER_PROJECT)
-  include(ClangFormat)
-  include(ClangTidy)
-  asap_setup_clang_format()
-  # Enable this target when the project has library with source files (.cpp)
-  # asap_create_clang_tidy_targets()
 endif()
 
 # ------------------------------------------------------------------------------
@@ -241,6 +226,24 @@ add_subdirectory(third_party)
 # ==============================================================================
 
 add_subdirectory(fsm)
+
+# ==============================================================================
+# Code analyzers: clang-tidy, cppcheck, valgrind, sanitizers, etc...
+#
+# Call after sub-modules have been added so that source code files can be
+# properly collected for analysis.
+# ==============================================================================
+
+if(${META_PROJECT_ID}_IS_MASTER_PROJECT)
+  include(ClangFormat)
+  include(ClangTidy)
+
+  # Enable this target when the project has header or source files (.h or .cpp)
+  asap_setup_clang_format()
+
+  # Enable this target when the project has source files (.cpp)
+  asap_create_clang_tidy_targets()
+endif()
 
 # ==============================================================================
 # Deployment (global project files)

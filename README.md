@@ -8,8 +8,8 @@
 
 ## Overview
 
-This is a C++ template-based implementation of state machines. The FSM has a 
-set of possible states and a set of rules that govern transitions between 
+This is a C++ template-based implementation of state machines. The FSM has a
+set of possible states and a set of rules that govern transitions between
 the current state and some other state upon receiving an event.
 
 A state can be an arbitrary object, which type is used to distinguish it from
@@ -42,12 +42,12 @@ git clone --recurse-submodules -j4 https://github.com/asap-projects/asap-fsm.git
 
 NOTES:
 
-- -j4 requests git to parallelize cloning of repos. Needs a relatively recent 
+- -j4 requests git to parallelize cloning of repos. Needs a relatively recent
   version of git. If that is not available, simply do not use this option.
 
 ## Requirements
 
-Make sure you have a C++ compiler with C++-17 capabilities at least. Gnu, Clang 
+Make sure you have a C++ compiler with C++-17 capabilities at least. Gnu, Clang
 and MSVC all can do that with a recent version.
 
 ## Enabling husky/commitlint/standard-version
@@ -66,11 +66,11 @@ npm install -g standard-version
 mkdir _build && cd _build && cmake .. && cmake --build .
 ```
 
-or just use one of the predefined `CMake` presets. Detailed instructions and 
-many useful commands are listed 
+or just use one of the predefined `CMake` presets. Detailed instructions and
+many useful commands are listed
 [here](https://abdes.github.io/asap/master/html/01-getting-started/useful-commands.html).
 
-### CMake configurable build options 
+### CMake configurable build options
 
 ```cmake
 # Project options
