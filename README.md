@@ -4,7 +4,7 @@
 
 [![Build Matrix](https://github.com/asap-projects/asap-fsm/actions/workflows/cmake-build.yml/badge.svg?branch=master)](https://github.com/asap-projects/asap-fsm/actions/workflows/cmake-build.yml)
 
-## [Project Documentation](https://asap-projects.github.io/asap-fsm/)
+## [Project Documentation](https://asap-projects.github.io/asap-fsm/asap_fsm_master/html)
 
 ## Overview
 
@@ -32,7 +32,7 @@ dispatches the event to the current state, which returns a specific action
 that gets executed to eventually transition to a new state.
 
 Examples and detailed documentation of the API can be found at the
-[Project Documentation](https://asap-projects.github.io/asap-fsm/) pages.
+[Project Documentation](https://asap-projects.github.io/asap-fsm/asap_fsm_master/html) pages.
 
 ## Getting the code
 
