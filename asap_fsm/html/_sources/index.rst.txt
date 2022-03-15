@@ -1,18 +1,6 @@
-.. Structure conventions
-     # with overline, for parts
-     * with overline, for chapters
-     = for sections
-     - for subsections
-     ^ for sub-subsections
-     " for paragraphs
-
 #######################################
 ASAP State Machine module documentation
 #######################################
-
-.. |date| date::
-
-Last Updated on |date|
 
 .. toctree::
    :maxdepth: 2

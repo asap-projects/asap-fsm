@@ -10,10 +10,6 @@
 Finite State Machines
 *********************
 
-.. |date| date::
-
-Last Updated on |date|
-
 The header <common/fsm.h> provides a template based framework to implement
 finite state machines in C++.
 

@@ -10,10 +10,6 @@
 Tutorial: A more robust door
 ****************************
 
-.. |date| date::
-
-Last Updated on |date|
-
 So far, we have created the door state machine with two states (Open and
 Closed), but we don't like the fact that the current implementation does not
 check if the door is already open or already closed when someone attempts to

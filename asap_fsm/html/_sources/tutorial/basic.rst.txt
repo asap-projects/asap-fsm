@@ -10,10 +10,6 @@
 Tutorial: A basic door
 **********************
 
-.. |date| date::
-
-Last Updated on |date|
-
 In this tutorial we will use the `asap::fsm` toolkit to implement a state
 machine simulating a door. We'll start with two states (Closed and Open) and
 two events (Open and Close). The state machine can be represented by the

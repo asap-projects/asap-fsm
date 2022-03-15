@@ -10,10 +10,6 @@
 Tutorial: A secure door
 ***********************
 
-.. |date| date::
-
-Last Updated on |date|
-
 In this last step of the tutorial, we'll make our door super smart. We're going
 to add a lock code that can be set when locking the door and that will be
 required to unlock it later.
