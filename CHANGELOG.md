@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.5](http://github.com/abdes/asap/compare/v1.0.4...v1.0.5) (2022-03-15)
+
+- refactor build to use CPM for cmake dependencies and speedup build with ccache.
+
+### Bug Fixes
+
+- method IsIn() should be const ([e022a57](http://github.com/abdes/asap/commit/e022a57cb99e0c5fb26b288730d802800e7fe9bb))
+- only add sanitizers if building tests ([76c1ccf](http://github.com/abdes/asap/commit/76c1ccf3f2651b40c19a2f2c68aa242eb7255331))
+- only install docs if directory exists ([82fe620](http://github.com/abdes/asap/commit/82fe620e6dcd2a8e81f640dcd893b7c67b2cc2ae))
+
 ## [1.0.4](http://github.com/abdes/asap/compare/v1.0.3...v1.0.4) (2022-03-06)
 
 ### Bug Fixes
