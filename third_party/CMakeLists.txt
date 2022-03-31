@@ -9,5 +9,5 @@ message("=> [third-party modules]")
 # Live at Head philosophy. Always use the latest commit in the main branch in
 # your projects.
 
-cpmaddpackage(NAME asap_common GIT_TAG v2.0.4 GITHUB_REPOSITORY
+cpmaddpackage(NAME asap_common GIT_TAG master GITHUB_REPOSITORY
               asap-projects/asap-common)
