@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
+#include "gmock/gmock.h"
 #include <fsm/fsm.h>
 
 #include <any>
@@ -34,6 +35,7 @@ using testing::IsFalse;
 using testing::IsTrue;
 using testing::Ref;
 using testing::Return;
+using testing::Throw;
 
 namespace asap::fsm {
 
@@ -107,6 +109,78 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
   DefaultedEvent event{};
   EXPECT_CALL(*mock_state, Handle).Times(0);
   machine.Handle(event);
+}
+
+// NOLINTNEXTLINE
+TEST(StateMachine, MachineHandleEventCatchesUnhandledExceptions) {
+  struct TestEvent {};
+  struct FirstState;
+  using Machine = StateMachine<FirstState>;
+
+  // This abstraction is only here to manage the circular dependencies created
+  // by mocking the TestAction class.
+  struct Action { // NOLINT
+    virtual auto Execute(Machine &machine, FirstState &state,
+        const TestEvent &event) -> Status = 0;
+
+  protected:
+    ~Action() = default;
+  };
+
+  struct TestAction {
+    auto Execute(Machine &machine, FirstState &state, const TestEvent &event)
+        -> Status {
+      return mock_->Execute(machine, state, event);
+    }
+    const std::shared_ptr<Action> mock_;
+  };
+
+  struct MockState {
+    // NOLINTNEXTLINE
+    MOCK_METHOD(TestAction, Handle, (const TestEvent &), ());
+  };
+
+  struct FirstState : ByDefault<DoNothing> {
+    using ByDefault::Handle;
+    explicit FirstState(std::shared_ptr<MockState> mock)
+        : mock_{std::move(mock)} {
+    }
+    auto Handle(const TestEvent &event) -> TestAction {
+      return mock_->Handle(event);
+    }
+    const std::shared_ptr<MockState> mock_;
+  };
+
+  // NOLINTNEXTLINE
+  struct MockAction final : public Action {
+    // NOLINTNEXTLINE
+    MOCK_METHOD(
+        Status, Execute, (Machine &, FirstState &, const TestEvent &), ());
+  };
+
+  auto mock_state = std::make_shared<MockState>();
+  auto mock_action = std::make_shared<MockAction>();
+
+  Machine machine{FirstState{mock_state}};
+
+  TestEvent test_event{};
+  std::logic_error error("unhandled exception");
+  EXPECT_CALL(*mock_state, Handle).Times(1).WillOnce(Throw(ByRef(error)));
+  auto status = machine.Handle(test_event);
+  // NOLINTNEXTLINE
+  ASSERT_NO_THROW(std::get<2>(status));
+
+  TestAction test_action{mock_action};
+  EXPECT_CALL(*mock_state, Handle)
+      .Times(1)
+      .WillOnce(Return(ByRef(test_action)));
+  auto &state = machine.TransitionTo<FirstState>();
+  EXPECT_CALL(*mock_action, Execute(Ref(machine), Ref(state), Ref(test_event)))
+      .Times(1)
+      .WillOnce(Throw(ByRef(error)));
+  status = machine.Handle(test_event);
+  // NOLINTNEXTLINE
+  ASSERT_NO_THROW(std::get<2>(status));
 }
 
 // NOLINTNEXTLINE
