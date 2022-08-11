@@ -4,18 +4,16 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include "gmock/gmock.h"
 #include <fsm/fsm.h>
 
 #include <any>
-#include <common/compilers.h>
-
 #include <exception>
+#include <stdexcept>
 
-#include <gmock/gmock-spec-builders.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <stdexcept>
+
+#include <common/compilers.h>
 
 // Disable compiler and linter warnings originating from the unit test framework
 // and for which we cannot do anything. Additionally, every TEST or TEST_X macro
