@@ -166,7 +166,7 @@ TEST(StateMachine, MachineHandleEventCatchesUnhandledExceptions) {
   EXPECT_CALL(*mock_state, Handle).Times(1).WillOnce(Throw(ByRef(error)));
   auto status = machine.Handle(test_event);
   // NOLINTNEXTLINE
-  ASSERT_NO_THROW(std::get<2>(status));
+  ASSERT_NO_THROW([[maybe_unused]] auto val = std::get<2>(status));
 
   TestAction test_action{mock_action};
   EXPECT_CALL(*mock_state, Handle)
@@ -178,7 +178,7 @@ TEST(StateMachine, MachineHandleEventCatchesUnhandledExceptions) {
       .WillOnce(Throw(ByRef(error)));
   status = machine.Handle(test_event);
   // NOLINTNEXTLINE
-  ASSERT_NO_THROW(std::get<2>(status));
+  ASSERT_NO_THROW([[maybe_unused]] auto val = std::get<2>(status));
 }
 
 // NOLINTNEXTLINE

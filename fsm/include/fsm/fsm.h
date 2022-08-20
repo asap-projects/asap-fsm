@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <fsm/asap_fsm_api.h>
+#include <fsm/asap_fsm_export.h>
 
 #include <any>
 #include <exception>
@@ -193,7 +193,7 @@ private:
  *
  * \snippet fsm_example_test.cpp Full State Machine Example
  */
-template <typename... States> class ASAP_FSM_TEMPLATE_API StateMachine {
+template <typename... States> class StateMachine {
 public:
   /*!
    * \brief Construct a new State Machine object with the given states, starting
@@ -307,7 +307,7 @@ private:
  *
  * \snippet fsm_test.cpp TransitionTo with data example
  */
-template <typename TargetState> struct ASAP_FSM_TEMPLATE_API TransitionTo {
+template <typename TargetState> struct TransitionTo {
 public:
   // NOLINTNEXTLINE(google-explicit-constructor, hicpp-explicit-conversions)
   TransitionTo(std::any data = {}) : data_{std::move(data)} {
@@ -515,7 +515,7 @@ constexpr auto supports_alternative() -> bool {
  *
  * \snippet fsm_test.cpp OneOf example
  */
-template <typename... Actions> struct ASAP_FSM_TEMPLATE_API OneOf {
+template <typename... Actions> struct OneOf {
   template <typename T,
       std::enable_if<!std::is_base_of<OneOf,
           typename std::remove_reference<T>::type>::value> * = nullptr>
@@ -593,8 +593,7 @@ template <typename T> constexpr bool is_one_of_v = is_one_of<T>::value;
  *
  * \snippet fsm_test.cpp OneOf example
  */
-template <typename Action>
-struct ASAP_FSM_TEMPLATE_API Maybe : public OneOf<Action, DoNothing> {
+template <typename Action> struct Maybe : public OneOf<Action, DoNothing> {
   using OneOf<Action, DoNothing>::OneOf;
 };
 
@@ -615,7 +614,7 @@ struct is_one_of<Maybe<Actions...>> : std::true_type {};
  *
  * \snippet fsm_test.cpp ByDefault example
  */
-template <typename Action> struct ASAP_FSM_TEMPLATE_API ByDefault {
+template <typename Action> struct ByDefault {
   template <typename Event>
   auto Handle(const Event & /*unused*/) const -> Action {
     return Action{};
@@ -630,7 +629,7 @@ template <typename Action> struct ASAP_FSM_TEMPLATE_API ByDefault {
  *
  * \snippet fsm_test.cpp On example
  */
-template <typename Event, typename Action> struct ASAP_FSM_TEMPLATE_API On {
+template <typename Event, typename Action> struct On {
   auto Handle(const Event & /*event*/) const -> Action {
     return {};
   }
@@ -644,8 +643,7 @@ template <typename Event, typename Action> struct ASAP_FSM_TEMPLATE_API On {
  *
  * \snippet fsm_test.cpp Will example
  */
-template <typename... Handlers>
-struct ASAP_FSM_TEMPLATE_API Will : Handlers... {
+template <typename... Handlers> struct Will : Handlers... {
   using Handlers::Handle...;
 };
 
