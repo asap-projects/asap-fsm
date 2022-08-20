@@ -342,9 +342,9 @@ machine simulating a door. We’ll start with two states (Closed and Open) and
 two events (Open and Close). The state machine can be represented by the
 following diagram:</p>
 <a class="reference internal image-reference" href="../_images/door_two_states.png"><img alt="Door states" class="align-center" src="../_images/door_two_states.png" style="width: 400px;" /></a>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fsm/fsm.h&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="linenos"> 2</span>
-<span class="linenos"> 3</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="linenos"> 3</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fsm/fsm.h&gt;</span><span class="cp"></span>
 <span class="linenos"> 4</span>
 <span class="linenos"> 5</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">ByDefault</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 6</span><span class="k">using</span><span class="w"> </span><span class="n">asap</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">DoNothing</span><span class="p">;</span><span class="w"></span>
