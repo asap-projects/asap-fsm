@@ -4,9 +4,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include <fsm/fsm.h>
-
 #include <iostream>
+
+#include <fsm/fsm.h>
 
 using asap::fsm::ByDefault;
 using asap::fsm::Continue;
@@ -28,7 +28,8 @@ struct ClosedState
     : Will<ByDefault<DoNothing>, On<OpenEvent, TransitionTo<OpenState>>> {
   using Will::Handle;
 
-  template <typename Event> auto OnEnter(const Event & /*event*/) -> Status {
+  template <typename Event>
+  static auto OnEnter(const Event & /*event*/) -> Status {
     std::cout << "   > door is closed\n";
     return Continue{};
   }
@@ -43,12 +44,14 @@ struct OpenState
     : Will<ByDefault<DoNothing>, On<CloseEvent, TransitionTo<ClosedState>>> {
   using Will::Handle;
 
-  template <typename Event> auto OnEnter(const Event & /*event*/) -> Status {
+  template <typename Event>
+  static auto OnEnter(const Event & /*event*/) -> Status {
     std::cout << "   > door is open\n";
     return Continue{};
   }
 
-  [[nodiscard]] static auto Handle(const OpenEvent & /*event*/) -> DoNothing {
+  [[nodiscard]] [[maybe_unused]] static auto Handle(const OpenEvent & /*event*/)
+      -> DoNothing {
     std::cerr << "Error: the door is already open!\n";
     return DoNothing{};
   }

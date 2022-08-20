@@ -10,15 +10,17 @@
  * \brief Implementation details of the StateMachine and related types.
  */
 
-#include <common/compilers.h>
-#include <fsm/fsm.h>
+#include "fsm/fsm.h"
 
+#include <optional>
 #include <stdexcept>
 #include <utility>
 
+#include <common/compilers.h>
+
 // Warnings free memory allocation without full dependency on GSL implementation
 namespace gsl {
-template <class T, class = std::enable_if_t<std::is_pointer<T>::value>>
+template <class T, class = std::enable_if_t<std::is_pointer_v<T>>>
 using owner = T;
 } // namespace gsl
 
@@ -50,7 +52,8 @@ private:
 // warning :-)
 StateMachineError::Impl::~Impl() = default;
 
-StateMachineError::StateMachineError() : pimpl(gsl::owner<Impl *>(new Impl())) {
+StateMachineError::StateMachineError()
+    : pimpl(static_cast<gsl::owner<Impl *>>(new Impl())) {
 }
 
 StateMachineError::StateMachineError(std::string description)
@@ -58,7 +61,7 @@ StateMachineError::StateMachineError(std::string description)
 }
 
 StateMachineError::StateMachineError(const StateMachineError &other)
-    : pimpl(gsl::owner<Impl *>(new Impl(*other.pimpl))) {
+    : pimpl(static_cast<gsl::owner<Impl *>>(new Impl(*other.pimpl))) {
 }
 
 StateMachineError::StateMachineError(StateMachineError &&other) noexcept
@@ -72,7 +75,7 @@ auto StateMachineError::operator=(const StateMachineError &rhs)
     return *this;
   }
   delete pimpl;
-  pimpl = gsl::owner<Impl *>(new Impl(*rhs.pimpl));
+  pimpl = static_cast<gsl::owner<Impl *>>(new Impl(*rhs.pimpl));
   return *this;
 }
 
@@ -99,7 +102,7 @@ auto StateMachineError::What() const -> const char * {
   return nullptr;
 }
 
-void StateMachineError::What(std::string description) {
+void StateMachineError::What(std::string description) const {
   pimpl->What(std::move(description));
 }
 

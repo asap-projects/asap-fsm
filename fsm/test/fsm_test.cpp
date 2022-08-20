@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include <fsm/fsm.h>
+#include "fsm/fsm.h"
 
 #include <any>
 #include <exception>
@@ -12,20 +12,6 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include <common/compilers.h>
-
-// Disable compiler and linter warnings originating from the unit test framework
-// and for which we cannot do anything. Additionally, every TEST or TEST_X macro
-// usage must be preceded by a '// NOLINTNEXTLINE'.
-ASAP_DIAGNOSTIC_PUSH
-#if defined(__clang__) && ASAP_HAS_WARNING("-Wused-but-marked-unused")
-#pragma clang diagnostic ignored "-Wused-but-marked-unused"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wexit-time-destructors"
-#pragma clang diagnostic ignored "-Wunused-member-function"
-#endif
-// NOLINTBEGIN(used-but-marked-unused)
 
 using testing::ByRef;
 using testing::Eq;
@@ -51,9 +37,6 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
   struct Action { // NOLINT
     virtual auto Execute(Machine &machine, FirstState &state,
         const TestEvent &event) -> Status = 0;
-
-  protected:
-    ~Action() = default;
   };
 
   struct TestAction {
@@ -87,8 +70,8 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
         Status, Execute, (Machine &, FirstState &, const TestEvent &), ());
   };
 
-  auto mock_state = std::make_shared<MockState>();
-  auto mock_action = std::make_shared<MockAction>();
+  const auto mock_state = std::make_shared<MockState>();
+  const auto mock_action = std::make_shared<MockAction>();
 
   Machine machine{FirstState{mock_state}};
 
@@ -104,7 +87,7 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
 
   // An event falling under a ByDefault rule will not trigger a call to the
   // state Handle method
-  DefaultedEvent event{};
+  const DefaultedEvent event{};
   EXPECT_CALL(*mock_state, Handle).Times(0);
   machine.Handle(event);
 }
@@ -120,9 +103,6 @@ TEST(StateMachine, MachineHandleEventCatchesUnhandledExceptions) {
   struct Action { // NOLINT
     virtual auto Execute(Machine &machine, FirstState &state,
         const TestEvent &event) -> Status = 0;
-
-  protected:
-    ~Action() = default;
   };
 
   struct TestAction {
@@ -416,8 +396,8 @@ TEST(StateMachine, TransitionToExample) {
     const std::shared_ptr<ExampleMockState> mock_;
   };
 
-  auto mock_initial_state = std::make_shared<ExampleMockState>();
-  auto mock_another_state = std::make_shared<ExampleMockState>();
+  const auto mock_initial_state = std::make_shared<ExampleMockState>();
+  const auto mock_another_state = std::make_shared<ExampleMockState>();
   Machine machine{
       FirstState{mock_initial_state}, SecondState{mock_another_state}};
 
@@ -490,8 +470,8 @@ TEST(StateMachine, TransitionToWithDataExample) {
     const std::shared_ptr<ExampleMockState> mock_;
   };
 
-  auto mock_initial_state = std::make_shared<ExampleMockState>();
-  auto mock_another_state = std::make_shared<ExampleMockState>();
+  const auto mock_initial_state = std::make_shared<ExampleMockState>();
+  const auto mock_another_state = std::make_shared<ExampleMockState>();
   Machine machine{
       FirstState{mock_initial_state}, SecondState{mock_another_state}};
 
@@ -528,7 +508,7 @@ struct StateMachineTransitionToErrors : public ::testing::Test {
     }
     // We only implement the OnLeave method, but that's ok.
     // The action will only call whatever is implemented.
-    auto OnLeave(const TransitionEvent &event) -> Status {
+    [[maybe_unused]] auto OnLeave(const TransitionEvent &event) -> Status {
       return mock_->OnLeave(event);
     }
 
@@ -542,7 +522,7 @@ struct StateMachineTransitionToErrors : public ::testing::Test {
     }
     // We only implement the OnEnter method, but that's ok.
     // The action will only call whatever is implemented.
-    auto OnEnter(const TransitionEvent &event) -> Status {
+    [[maybe_unused]] auto OnEnter(const TransitionEvent &event) -> Status {
       return mock_->OnEnter(event);
     }
 
@@ -566,7 +546,7 @@ TEST_F(StateMachineTransitionToErrors, OnLeaveReturnsTerminate) {
       .Times(1)
       .WillOnce(Return(Terminate{}));
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event))).Times(0);
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsFalse());
   EXPECT_THAT(std::holds_alternative<Terminate>(status), IsTrue());
 }
@@ -579,7 +559,7 @@ TEST_F(StateMachineTransitionToErrors, OnLeaveReturnsTerminateWithError) {
       .Times(1)
       .WillOnce(Return(TerminateWithError{"error"}));
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event))).Times(0);
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsFalse());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
   EXPECT_THAT(std::get<TerminateWithError>(status).error_message, Eq("error"));
@@ -593,7 +573,7 @@ TEST_F(StateMachineTransitionToErrors, OnLeaveThrowsStateMachineError) {
       .Times(1)
       .WillOnce(testing::Throw(StateMachineError("error")));
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event))).Times(0);
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsFalse());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
   EXPECT_THAT(std::get<TerminateWithError>(status).error_message, Eq("error"));
@@ -607,7 +587,7 @@ TEST_F(StateMachineTransitionToErrors, OnLeaveThrowsOtherError) {
       .Times(1)
       .WillOnce(testing::Throw(std::runtime_error("error")));
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event))).Times(0);
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsFalse());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
   EXPECT_THAT(
@@ -624,7 +604,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterReturnsTerminate) {
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event)))
       .Times(1)
       .WillOnce(Return(Terminate{}));
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<Terminate>(status), IsTrue());
 }
@@ -639,7 +619,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterReturnsTerminateWithError) {
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event)))
       .Times(1)
       .WillOnce(Return(TerminateWithError{"error"}));
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
   EXPECT_THAT(std::get<TerminateWithError>(status).error_message, Eq("error"));
@@ -655,7 +635,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterReturnsReissueEvent) {
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event)))
       .Times(1)
       .WillOnce(Return(ReissueEvent{}));
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<ReissueEvent>(status), IsTrue());
 }
@@ -670,7 +650,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterThrowsStateMachineError) {
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event)))
       .Times(1)
       .WillOnce(::testing::Throw(StateMachineError("error")));
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
   EXPECT_THAT(std::get<TerminateWithError>(status).error_message, Eq("error"));
@@ -686,7 +666,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterThrowsOtherError) {
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event)))
       .Times(1)
       .WillOnce(::testing::Throw(std::runtime_error("error")));
-  auto status = machine.Handle(event);
+  const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
   EXPECT_THAT(
@@ -701,7 +681,7 @@ TEST(StateMachine, TransitionToIsATest) {
   ASSERT_THAT(action.IsA<TransitionTo<State>>(), IsTrue());
   ASSERT_THAT(action.IsA<DoNothing>(), IsFalse());
 
-  auto specific_ok = action.GetAs<TransitionTo<State>>();
+  const auto specific_ok = action.GetAs<TransitionTo<State>>();
   EXPECT_THAT(std::any_cast<int>(specific_ok.data()), Eq(data));
   const auto &const_specific_ok =
       // NOLINTNEXTLINE
@@ -725,7 +705,7 @@ TEST(StateMachine, DoNothingIsATest) {
 // NOLINTNEXTLINE
 TEST(StateMachine, ReportErrorIsATest) {
   struct State {};
-  auto error = StateMachineError{};
+  const auto error = StateMachineError{};
   auto action = ReportError{error};
   EXPECT_THAT(action.IsA<ReportError>(), IsTrue());
 
@@ -733,7 +713,7 @@ TEST(StateMachine, ReportErrorIsATest) {
   [[maybe_unused]] const auto &const_specific_ok =
       // NOLINTNEXTLINE
       const_cast<const ReportError &>(action).GetAs<ReportError>();
-  auto stored_error =
+  const auto stored_error =
       std::any_cast<StateMachineError>(const_specific_ok.data());
   EXPECT_THAT(stored_error.What(), Eq(error.What()));
 }
@@ -830,6 +810,3 @@ std::vector<DynamicActionTestValue<DoNothing>>
     DynamicActionTest<DoNothing>::test_actions{{DoNothing{}, false}};
 
 } // namespace asap::fsm
-
-// NOLINTEND(used-but-marked-unused)
-ASAP_DIAGNOSTIC_POP

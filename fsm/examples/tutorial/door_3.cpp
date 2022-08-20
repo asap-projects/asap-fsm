@@ -4,9 +4,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include <fsm/fsm.h>
-
 #include <iostream>
+
+#include <fsm/fsm.h>
 
 using asap::fsm::ByDefault;
 using asap::fsm::Continue;
@@ -39,17 +39,20 @@ struct ClosedState
           On<OpenEvent, TransitionTo<OpenState>>> {
   using Will::Handle;
 
-  static auto OnEnter(const UnlockEvent & /*event*/) -> Status {
+  [[maybe_unused]] static auto OnEnter(const UnlockEvent & /*event*/)
+      -> Status {
     std::cout << "   > door is closed - unlocked\n";
     return Continue{};
   }
 
-  template <typename Event> auto OnEnter(const Event & /*event*/) -> Status {
+  template <typename Event>
+  static auto OnEnter(const Event & /*event*/) -> Status {
     std::cout << "   > door is closed\n";
     return Continue{};
   }
 
-  [[nodiscard]] static auto Handle(const CloseEvent & /*event*/) -> DoNothing {
+  [[nodiscard]] [[maybe_unused]] static auto Handle(
+      const CloseEvent & /*event*/) -> DoNothing {
     std::cerr << "Error: the door is already closed!\n";
     return DoNothing{};
   }
@@ -59,12 +62,14 @@ struct OpenState
     : Will<ByDefault<DoNothing>, On<CloseEvent, TransitionTo<ClosedState>>> {
   using Will::Handle;
 
-  template <typename Event> auto OnEnter(const Event & /*event*/) -> Status {
+  template <typename Event>
+  static auto OnEnter(const Event & /*event*/) -> Status {
     std::cout << "   > door is open\n";
     return Continue{};
   }
 
-  [[nodiscard]] static auto Handle(const OpenEvent & /*event*/) -> DoNothing {
+  [[nodiscard]] [[maybe_unused]] static auto Handle(const OpenEvent & /*event*/)
+      -> DoNothing {
     std::cerr << "Error: the door is already open!\n";
     return DoNothing{};
   }
@@ -76,13 +81,13 @@ struct LockedState : ByDefault<DoNothing> {
   explicit LockedState(uint32_t key) : key_(key) {
   }
 
-  auto OnEnter(const LockEvent &event) -> Status {
+  [[maybe_unused]] auto OnEnter(const LockEvent &event) -> Status {
     std::cout << "   > door is locked with new code(" << event.newKey << ")\n";
     key_ = event.newKey;
     return Continue{};
   }
 
-  [[nodiscard]] auto Handle(const UnlockEvent &event) const
+  [[nodiscard]] [[maybe_unused]] auto Handle(const UnlockEvent &event) const
       -> Maybe<TransitionTo<ClosedState>> {
     if (event.key == key_) {
       return TransitionTo<ClosedState>{};

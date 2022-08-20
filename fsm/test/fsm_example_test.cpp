@@ -4,27 +4,12 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include <fsm/fsm.h>
+#include "fsm/fsm.h"
 
-#include <common/compilers.h>
 #include <exception>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-// Disable compiler and linter warnings originating from the unit test framework
-// and for which we cannot do anything. Additionally, every TEST or TEST_X macro
-// usage must be preceded by a '// NOLINTNEXTLINE'.
-ASAP_DIAGNOSTIC_PUSH
-#if defined(__clang__) && ASAP_HAS_WARNING("-Wused-but-marked-unused")
-#pragma clang diagnostic ignored "-Wused-but-marked-unused"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wunused-member-function"
-#endif
-// NOLINTBEGIN(used-but-marked-unused)
-
-using testing::Eq;
-using testing::IsTrue;
 
 namespace asap::fsm {
 
@@ -65,13 +50,13 @@ struct LockedState : ByDefault<DoNothing> {
   explicit LockedState(uint32_t key) : key_(key) {
   }
 
-  auto OnEnter(const LockEvent &event) -> Status {
+  [[maybe_unused]] auto OnEnter(const LockEvent &event) -> Status {
     key_ = event.newKey;
     return Continue{};
   }
 
   //! [State Handle method]
-  [[nodiscard]] auto Handle(const UnlockEvent &event) const
+  [[nodiscard]] [[maybe_unused]] auto Handle(const UnlockEvent &event) const
       -> Maybe<TransitionTo<ClosedState>> {
     if (event.key == key_) {
       return TransitionTo<ClosedState>{};
@@ -102,6 +87,3 @@ TEST(StateMachine, ExampleTest) {
 } // namespace
 
 } // namespace asap::fsm
-
-// NOLINTEND(used-but-marked-unused)
-ASAP_DIAGNOSTIC_POP

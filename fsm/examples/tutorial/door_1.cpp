@@ -4,9 +4,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
-#include <fsm/fsm.h>
-
 #include <iostream>
+
+#include <fsm/fsm.h>
 
 using asap::fsm::ByDefault;
 using asap::fsm::DoNothing;

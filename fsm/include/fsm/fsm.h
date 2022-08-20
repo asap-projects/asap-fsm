@@ -17,17 +17,15 @@
 
 #pragma once
 
-#include <fsm/asap_fsm_export.h>
-
 #include <any>
-#include <exception>
 #include <functional>
 #include <iostream>
-#include <optional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
 #include <variant>
+
+#include <fsm/asap_fsm_export.h>
 
 /// Namespace for the State Machine library.
 namespace asap::fsm {
@@ -129,7 +127,7 @@ protected:
    * \brief Called from derived exception classes to populate the error message
    * with meaningful information.
    */
-  void What(std::string description);
+  void What(std::string description) const;
 
 private:
   // Internal implementation class.
@@ -364,28 +362,28 @@ public:
 private:
   // This overload is always in the set of overloads. Ellipsis parameter has the
   // lowest ranking for overload resolution.
-  template <typename... Args> auto Leave(Args... /*unused*/) -> Status {
+  template <typename... Args> static auto Leave(Args... /*unused*/) -> Status {
     return Continue{};
   }
 
   // SFINAE: This overload is for states that implement `onLeave` with an event
   // parameter.
   template <typename State, typename Event>
-  [[maybe_unused]] auto Leave(State &state, const Event &event)
+  [[maybe_unused]] static auto Leave(State &state, const Event &event)
       -> decltype(state.OnLeave(event)) {
     return state.OnLeave(event);
   }
 
   // This overload is always in the set of overloads. Ellipsis parameter has the
   // lowest ranking for overload resolution.
-  template <typename... Args> auto Enter(Args... /*unused*/) -> Status {
+  template <typename... Args> static auto Enter(Args... /*unused*/) -> Status {
     return Continue{};
   }
 
   // SFINAE: This overload is for states that implement `onEnter` with an event
   // parameter. Data from the previous event, if any, will be discarded.
   template <typename State, typename Event>
-  [[maybe_unused]] auto Enter(State &state, const Event &event)
+  [[maybe_unused]] static auto Enter(State &state, const Event &event)
       -> decltype(state.OnEnter(event)) {
     return state.OnEnter(event);
   }
@@ -417,7 +415,7 @@ private:
  */
 struct ASAP_FSM_API DoNothing {
   template <typename Machine, typename State, typename Event>
-  auto Execute(Machine & /*unused*/, State & /*unused*/,
+  static auto Execute(Machine & /*unused*/, State & /*unused*/,
       const Event & /*unused*/) -> Status {
     return Continue{};
   }
@@ -517,8 +515,8 @@ constexpr auto supports_alternative() -> bool {
  */
 template <typename... Actions> struct OneOf {
   template <typename T,
-      std::enable_if<!std::is_base_of<OneOf,
-          typename std::remove_reference<T>::type>::value> * = nullptr>
+      std::enable_if<!std::is_base_of_v<OneOf, std::remove_reference_t<T>>> * =
+          nullptr>
   // NOLINTNEXTLINE(google-explicit-constructor,hicpp-explicit-conversions,bugprone-forwarding-reference-overload)
   OneOf(T &&arg) : option(std::forward<T>(arg)) {
   }
@@ -616,7 +614,7 @@ struct is_one_of<Maybe<Actions...>> : std::true_type {};
  */
 template <typename Action> struct ByDefault {
   template <typename Event>
-  auto Handle(const Event & /*unused*/) const -> Action {
+  static auto Handle(const Event & /*unused*/) -> Action {
     return Action{};
   }
 };
@@ -630,7 +628,7 @@ template <typename Action> struct ByDefault {
  * \snippet fsm_test.cpp On example
  */
 template <typename Event, typename Action> struct On {
-  auto Handle(const Event & /*event*/) const -> Action {
+  static auto Handle(const Event & /*event*/) -> Action {
     return {};
   }
 };
