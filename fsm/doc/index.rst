@@ -38,9 +38,6 @@ event loop which calls the state machine's `Handle` method. The latter
 dispatches the event to the current state, which returns a specific action
 that gets executed to eventually transition to a new state.
 
-Examples and detailed documentation of the API can be found at the
-[Project Documentation](https://asap-projects.github.io/asap-fsm/) pages.
-
 Parts of the documentation
 ==========================
 
