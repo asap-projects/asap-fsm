@@ -21,4 +21,3 @@ left for detailed descriptions of the classes and their functionality.
    State Machine <api/statemachine>
    Actions <api/actions>
    State Helpers <api/state-helpers>
-   Exceptions <api/exceptions>
