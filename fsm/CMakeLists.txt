@@ -118,12 +118,6 @@ if(${META_PROJECT_ID}_INSTALL)
     FILES_MATCHING
     PATTERN "*.h")
 
-  # Generated header files
-  install(
-    DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${META_MODULE_NAME}
-    DESTINATION ${ASAP_INSTALL_INCLUDE}
-    COMPONENT ${dev})
-
   # Target config
   install(
     EXPORT ${TARGETS_EXPORT_NAME}
