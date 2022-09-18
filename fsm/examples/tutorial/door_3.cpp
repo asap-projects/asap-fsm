@@ -105,25 +105,31 @@ private:
 using Door = StateMachine<ClosedState, LockedState, OpenState>;
 
 auto main() -> int {
-  Door door{ClosedState{}, LockedState(0), OpenState{}};
+  try {
+    Door door{ClosedState{}, LockedState(0), OpenState{}};
 
-  constexpr int lock_code = 1234;
-  constexpr int bad_code = 2;
+    constexpr int lock_code = 1234;
+    constexpr int bad_code = 2;
 
-  std::cout << "-- Starting\n";
+    std::cout << "-- Starting\n";
 
-  std::cout << "-- sending open event\n";
-  door.Handle(OpenEvent{});
+    std::cout << "-- sending open event\n";
+    door.Handle(OpenEvent{});
 
-  std::cout << "-- sending close event\n";
-  door.Handle(CloseEvent{});
+    std::cout << "-- sending close event\n";
+    door.Handle(CloseEvent{});
 
-  std::cout << "-- sending lock event (" << lock_code << ")\n";
-  door.Handle(LockEvent{lock_code});
+    std::cout << "-- sending lock event (" << lock_code << ")\n";
+    door.Handle(LockEvent{lock_code});
 
-  std::cout << "-- sending unlock event (" << bad_code << ")\n";
-  door.Handle(UnlockEvent{bad_code});
+    std::cout << "-- sending unlock event (" << bad_code << ")\n";
+    door.Handle(UnlockEvent{bad_code});
 
-  std::cout << "-- sending unlock event (" << lock_code << ")\n";
-  door.Handle(UnlockEvent{lock_code});
+    std::cout << "-- sending unlock event (" << lock_code << ")\n";
+    door.Handle(UnlockEvent{lock_code});
+  } catch (const std::exception &err) {
+    std::cerr << "An exception was thrown: " << err.what() << std::endl;
+  } catch (...) {
+    std::cerr << "An unknown exception was thrown" << std::endl;
+  }
 }

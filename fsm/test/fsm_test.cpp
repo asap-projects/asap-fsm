@@ -34,14 +34,16 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
 
   // This abstraction is only here to manage the circular dependencies created
   // by mocking the TestAction class.
-  struct Action { // NOLINT
+  struct Action { // NOLINT(cppcoreguidelines-special-member-functions)
+    virtual ~Action() = default;
+    // NOLINT
     virtual auto Execute(Machine &machine, FirstState &state,
         const TestEvent &event) -> Status = 0;
   };
 
   struct TestAction {
-    auto Execute(Machine &machine, FirstState &state, const TestEvent &event)
-        -> Status {
+    auto Execute(Machine &machine, FirstState &state,
+        const TestEvent &event) const -> Status {
       return mock_->Execute(machine, state, event);
     }
     const std::shared_ptr<Action> mock_;
@@ -57,7 +59,8 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
     explicit FirstState(std::shared_ptr<MockState> mock)
         : mock_{std::move(mock)} {
     }
-    auto Handle(const TestEvent &event) -> TestAction {
+
+    [[nodiscard]] auto Handle(const TestEvent &event) const -> TestAction {
       return mock_->Handle(event);
     }
     const std::shared_ptr<MockState> mock_;
@@ -87,7 +90,7 @@ TEST(StateMachine, MachineHandleEventRelaysToStateAndExecutesReturnedAction) {
 
   // An event falling under a ByDefault rule will not trigger a call to the
   // state Handle method
-  const DefaultedEvent event{};
+  constexpr DefaultedEvent event{};
   EXPECT_CALL(*mock_state, Handle).Times(0);
   machine.Handle(event);
 }
@@ -100,14 +103,16 @@ TEST(StateMachine, MachineHandleEventCatchesUnhandledExceptions) {
 
   // This abstraction is only here to manage the circular dependencies created
   // by mocking the TestAction class.
-  struct Action { // NOLINT
+  struct Action { // NOLINT(cppcoreguidelines-special-member-functions)
+    virtual ~Action() = default;
+    // NOLINT
     virtual auto Execute(Machine &machine, FirstState &state,
         const TestEvent &event) -> Status = 0;
   };
 
   struct TestAction {
-    auto Execute(Machine &machine, FirstState &state, const TestEvent &event)
-        -> Status {
+    auto Execute(Machine &machine, FirstState &state,
+        const TestEvent &event) const -> Status {
       return mock_->Execute(machine, state, event);
     }
     const std::shared_ptr<Action> mock_;
@@ -123,7 +128,8 @@ TEST(StateMachine, MachineHandleEventCatchesUnhandledExceptions) {
     explicit FirstState(std::shared_ptr<MockState> mock)
         : mock_{std::move(mock)} {
     }
-    auto Handle(const TestEvent &event) -> TestAction {
+
+    [[nodiscard]] auto Handle(const TestEvent &event) const -> TestAction {
       return mock_->Handle(event);
     }
     const std::shared_ptr<MockState> mock_;
@@ -374,7 +380,7 @@ TEST(StateMachine, TransitionToExample) {
     }
     // We only implement the OnLeave method, but that's ok.
     // The action will only call whatever is implemented.
-    auto OnLeave(const TransitionEvent &event) -> Status {
+    [[nodiscard]] auto OnLeave(const TransitionEvent &event) const -> Status {
       return mock_->OnLeave(event);
     }
 
@@ -388,7 +394,7 @@ TEST(StateMachine, TransitionToExample) {
     }
     // We only implement the OnEnter method, but that's ok.
     // The action will only call whatever is implemented.
-    auto OnEnter(const TransitionEvent &event) -> Status {
+    [[nodiscard]] auto OnEnter(const TransitionEvent &event) const -> Status {
       return mock_->OnEnter(event);
     }
 
@@ -436,7 +442,7 @@ TEST(StateMachine, TransitionToWithDataExample) {
     }
     // We only implement the OnLeave method, but that's ok.
     // The action will only call whatever is implemented.
-    auto OnLeave(const TransitionEvent &event) -> Status {
+    [[nodiscard]] auto OnLeave(const TransitionEvent &event) const -> Status {
       return mock_->OnLeave(event);
     }
 
@@ -458,7 +464,8 @@ TEST(StateMachine, TransitionToWithDataExample) {
     }
     // This implementation expects data to be passed from the
     // previous state.
-    auto OnEnter(const TransitionEvent &event, std::any data) -> Status {
+    [[nodiscard]] auto OnEnter(
+        const TransitionEvent &event, std::any data) const -> Status {
       EXPECT_THAT(std::any_cast<int>(data), Eq(1));
       // Mocking methods with std::any arguments will fail to compile with clang
       // and there is no fix for it from gmock. Just specifically cast the
@@ -508,7 +515,8 @@ struct StateMachineTransitionToErrors : public ::testing::Test {
     }
     // We only implement the OnLeave method, but that's ok.
     // The action will only call whatever is implemented.
-    [[maybe_unused]] auto OnLeave(const TransitionEvent &event) -> Status {
+    [[maybe_unused]] [[nodiscard]] auto OnLeave(
+        const TransitionEvent &event) const -> Status {
       return mock_->OnLeave(event);
     }
 
@@ -522,7 +530,8 @@ struct StateMachineTransitionToErrors : public ::testing::Test {
     }
     // We only implement the OnEnter method, but that's ok.
     // The action will only call whatever is implemented.
-    [[maybe_unused]] auto OnEnter(const TransitionEvent &event) -> Status {
+    [[maybe_unused]] [[nodiscard]] auto OnEnter(
+        const TransitionEvent &event) const -> Status {
       return mock_->OnEnter(event);
     }
 
@@ -571,7 +580,7 @@ TEST_F(StateMachineTransitionToErrors, OnLeaveThrowsStateMachineError) {
 
   EXPECT_CALL(*mock_initial_state, OnLeave(Ref(event)))
       .Times(1)
-      .WillOnce(testing::Throw(StateMachineError("error")));
+      .WillOnce(testing::Throw(std::runtime_error("error")));
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event))).Times(0);
   const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsFalse());
@@ -590,8 +599,7 @@ TEST_F(StateMachineTransitionToErrors, OnLeaveThrowsOtherError) {
   const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsFalse());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
-  EXPECT_THAT(
-      std::get<TerminateWithError>(status).error_message, Eq("another error"));
+  EXPECT_THAT(std::get<TerminateWithError>(status).error_message, Eq("error"));
 }
 
 // NOLINTNEXTLINE
@@ -649,7 +657,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterThrowsStateMachineError) {
       .WillOnce(Return(Continue{}));
   EXPECT_CALL(*mock_another_state, OnEnter(Ref(event)))
       .Times(1)
-      .WillOnce(::testing::Throw(StateMachineError("error")));
+      .WillOnce(::testing::Throw(std::runtime_error("error")));
   const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
@@ -669,8 +677,7 @@ TEST_F(StateMachineTransitionToErrors, OnEnterThrowsOtherError) {
   const auto status = machine.Handle(event);
   ASSERT_THAT(machine.IsIn<SecondState>(), IsTrue());
   EXPECT_THAT(std::holds_alternative<TerminateWithError>(status), IsTrue());
-  EXPECT_THAT(
-      std::get<TerminateWithError>(status).error_message, Eq("another error"));
+  EXPECT_THAT(std::get<TerminateWithError>(status).error_message, Eq("error"));
 }
 
 // NOLINTNEXTLINE
@@ -705,7 +712,7 @@ TEST(StateMachine, DoNothingIsATest) {
 // NOLINTNEXTLINE
 TEST(StateMachine, ReportErrorIsATest) {
   struct State {};
-  const auto error = StateMachineError{};
+  constexpr auto error = "an error";
   auto action = ReportError{error};
   EXPECT_THAT(action.IsA<ReportError>(), IsTrue());
 
@@ -714,8 +721,8 @@ TEST(StateMachine, ReportErrorIsATest) {
       // NOLINTNEXTLINE
       const_cast<const ReportError &>(action).GetAs<ReportError>();
   const auto stored_error =
-      std::any_cast<StateMachineError>(const_specific_ok.data());
-  EXPECT_THAT(stored_error.What(), Eq(error.What()));
+      std::any_cast<std::string>(const_specific_ok.data());
+  EXPECT_THAT(stored_error, Eq(error));
 }
 
 // NOLINTNEXTLINE

@@ -18,6 +18,7 @@
 #pragma once
 
 #include <any>
+#include <exception>
 #include <functional>
 #include <iostream>
 #include <tuple>
@@ -85,61 +86,6 @@ struct ReissueEvent {};
  */
 using Status =
     std::variant<Continue, Terminate, TerminateWithError, ReissueEvent>;
-
-/*!
- * \brief The base class for exceptions thrown by state machine implementations.
- *
- * For consistency and clarity in the error messages and handling of errors when
- * animating the state machine, it is important that exceptions thrown by
- * concrete state machines derive from this class.
- *
- * \see StateMachine::Handle
- */
-class ASAP_FSM_API StateMachineError {
-public:
-  StateMachineError();
-  explicit StateMachineError(std::string description);
-
-  StateMachineError(const StateMachineError &);
-  StateMachineError(StateMachineError &&) noexcept;
-
-  auto operator=(const StateMachineError &) -> StateMachineError &;
-  auto operator=(StateMachineError &&) noexcept -> StateMachineError &;
-
-  virtual ~StateMachineError() noexcept;
-
-  /*!
-   * \brief Provides an explanatory message about the error.
-   *
-   * THe actual error message should be set by the specific derived exception
-   * class. If not set, a generic message will be provided which may not say
-   * anything useful about the error.
-   *
-   * \return Pointer to a null-terminated string with explanatory information.
-   * The pointer is guaranteed to be valid at least until the exception object
-   * from which it is obtained is destroyed, or until a non-const member
-   * function on the exception object is called.
-   */
-  [[nodiscard]] virtual auto What() const -> const char *;
-
-protected:
-  /*!
-   * \brief Called from derived exception classes to populate the error message
-   * with meaningful information.
-   */
-  void What(std::string description) const;
-
-private:
-  // Internal implementation class.
-  // We're using the pimpl idiom here because this is a throwable class, that
-  // will create issues with MSVC/clang/GCC when it comes to visibility. The
-  // whole class must be exported for GCC/clang and MSVC does not like exported
-  // classes with members using a type that is not an exported class.
-  class Impl;
-
-  // Pointer to the internal implementation
-  Impl *pimpl;
-};
 
 /*!
  * \brief Represents a Finite State Machine (FSM).
@@ -222,11 +168,16 @@ public:
    */
   template <typename Event> auto Handle(const Event &event) -> Status {
     auto passEventToState = [this, &event](auto statePtr) noexcept {
+      // Throwing exception from event handlers is not recommended but can still
+      // be done. We'll try to translate this to a TerminateWithError status
+      // anyway.
       try {
         auto action = statePtr->Handle(event);
         return action.Execute(*this, *statePtr, event);
+      } catch (const std::exception &err) {
+        return Status{TerminateWithError{err.what()}};
       } catch (...) {
-        return Status{TerminateWithError{"another error"}};
+        return Status{TerminateWithError{"not std::exception"}};
       }
     };
     return std::visit(passEventToState, current_state_);
@@ -245,7 +196,7 @@ public:
    * \return State& the new state.
    */
   template <typename State> auto TransitionTo() -> State & {
-    State &state = std::get<State>(states_);
+    auto &state = std::get<State>(states_);
     current_state_ = &state;
     return state;
   }
@@ -258,7 +209,7 @@ public:
    * checked for; *false* otherwise.
    */
   template <typename State> [[nodiscard]] auto IsIn() const -> bool {
-    const State &state = std::get<State>(states_);
+    const auto &state = std::get<State>(states_);
     try {
       return std::get<State *>(current_state_) == &state;
     } catch (const std::bad_variant_access & /*error*/) {
@@ -314,24 +265,18 @@ public:
   template <typename Machine, typename State, typename Event>
   auto Execute(Machine &machine, State &prevState, const Event &event)
       -> Status {
-    try {
-      // Call OnLeave and if it fails or requests termination, do not transition
-      // to the next state.
-      Status status = Leave(prevState, event);
-      if (std::holds_alternative<Terminate>(status) ||
-          std::holds_alternative<TerminateWithError>(status)) {
-        return status;
-      }
-      TargetState &newState = machine.template TransitionTo<TargetState>();
-      if (data_.has_value()) {
-        return Enter(newState, event, data_);
-      }
-      return Enter(newState, event);
-    } catch (const StateMachineError &err) {
-      // This is a shortcut for OnLeave and OnEnter to simply throw a
-      // StateMachineError or a derived exception when an error occurs.
-      return TerminateWithError{err.What()};
+    // Call OnLeave and if it fails or requests termination, do not transition
+    // to the next state.
+    Status status = Leave(prevState, event);
+    if (std::holds_alternative<Terminate>(status) ||
+        std::holds_alternative<TerminateWithError>(status)) {
+      return status;
     }
+    auto &newState = machine.template TransitionTo<TargetState>();
+    if (data_.has_value()) {
+      return Enter(newState, event, data_);
+    }
+    return Enter(newState, event);
   }
 
   [[nodiscard]] auto data() const noexcept -> const std::any & {
@@ -344,19 +289,16 @@ public:
   }
 
   template <typename ActionType> auto GetAs() -> ActionType & {
-    if constexpr (std::is_same_v<ActionType, TransitionTo<TargetState>>) {
-      return static_cast<ActionType &>(*this);
-    } else {
-      throw std::bad_cast();
-    }
+    static_assert(std::is_same_v<ActionType, TransitionTo<TargetState>>,
+        "do not use GetAs() with the wrong type");
+    return static_cast<ActionType &>(*this);
   }
 
-  template <typename ActionType> auto GetAs() const -> const ActionType & {
-    if constexpr (std::is_same_v<ActionType, TransitionTo<TargetState>>) {
-      return static_cast<const ActionType &>(*this);
-    } else {
-      throw std::bad_cast();
-    }
+  template <typename ActionType>
+  [[nodiscard]] auto GetAs() const -> const ActionType & {
+    static_assert(std::is_same_v<ActionType, TransitionTo<TargetState>>,
+        "do not use GetAs() with the wrong type");
+    return static_cast<const ActionType &>(*this);
   }
 
 private:
@@ -392,9 +334,9 @@ private:
   // parameter and a data parameter, indicating that it is expecting data from
   // the previous state.
   template <typename State, typename Event>
-  auto Enter(State &state, const Event &event, const std::any &data)
+  static auto Enter(State &state, const Event &event, const std::any &data)
       -> decltype(state.OnEnter(event, data)) {
-    return state.OnEnter(event, data_);
+    return state.OnEnter(event, data);
   }
 
   std::any data_;
@@ -413,14 +355,14 @@ private:
  * focus on implementing those event handlers that make sense for that
  * particular state.
  */
-struct ASAP_FSM_API DoNothing {
+struct DoNothing {
   template <typename Machine, typename State, typename Event>
   static auto Execute(Machine & /*unused*/, State & /*unused*/,
       const Event & /*unused*/) -> Status {
     return Continue{};
   }
 
-  [[nodiscard]] static auto data() noexcept -> const std::any &;
+  [[nodiscard]] ASAP_FSM_API static auto data() noexcept -> const std::any &;
 
   template <typename ActionType>
   [[nodiscard]] auto IsA() const noexcept -> bool {
@@ -428,19 +370,16 @@ struct ASAP_FSM_API DoNothing {
   }
 
   template <typename ActionType> auto GetAs() -> ActionType & {
-    if constexpr (std::is_same_v<ActionType, DoNothing>) {
-      return static_cast<ActionType &>(*this);
-    } else {
-      throw std::bad_cast();
-    }
+    static_assert(std::is_same_v<ActionType, DoNothing>,
+        "do not use GetAs() with the wrong type");
+    return static_cast<ActionType &>(*this);
   }
 
-  template <typename ActionType> auto GetAs() const -> const ActionType & {
-    if constexpr (std::is_same_v<ActionType, DoNothing>) {
-      return static_cast<const ActionType &>(*this);
-    } else {
-      throw std::bad_cast();
-    }
+  template <typename ActionType>
+  [[nodiscard]] auto GetAs() const -> const ActionType & {
+    static_assert(std::is_same_v<ActionType, DoNothing>,
+        "do not use GetAs() with the wrong type");
+    return static_cast<const ActionType &>(*this);
   }
 };
 
@@ -455,13 +394,13 @@ struct ASAP_FSM_API DoNothing {
  * providing the error explanatory message in the form of the action's data.
  */
 struct ReportError {
-  explicit ReportError(StateMachineError error) : error_(std::move(error)) {
+  explicit ReportError(std::string what) : error_(std::move(what)) {
   }
 
   template <typename Machine, typename State, typename Event>
   auto Execute(Machine & /*unused*/, State & /*unused*/,
       const Event & /*unused*/) -> Status {
-    return TerminateWithError{std::any_cast<StateMachineError>(error_).What()};
+    return TerminateWithError{std::any_cast<std::string>(error_)};
   }
 
   [[nodiscard]] auto data() const noexcept -> const std::any & {
@@ -474,19 +413,16 @@ struct ReportError {
   }
 
   template <typename ActionType> auto GetAs() -> ActionType & {
-    if constexpr (std::is_same_v<ActionType, ReportError>) {
-      return static_cast<ActionType &>(*this);
-    } else {
-      throw std::bad_cast();
-    }
+    static_assert(std::is_same_v<ActionType, ReportError>,
+        "do not use GetAs() with the wrong type");
+    return static_cast<ActionType &>(*this);
   }
 
-  template <typename ActionType> auto GetAs() const -> const ActionType & {
-    if constexpr (std::is_same_v<ActionType, ReportError>) {
-      return static_cast<const ActionType &>(*this);
-    } else {
-      throw std::bad_cast();
-    }
+  template <typename ActionType>
+  [[nodiscard]] auto GetAs() const -> const ActionType & {
+    static_assert(std::is_same_v<ActionType, ReportError>,
+        "do not use GetAs() with the wrong type");
+    return static_cast<const ActionType &>(*this);
   }
 
 private:
@@ -555,19 +491,16 @@ template <typename... Actions> struct OneOf {
   }
 
   template <typename ActionType> auto GetAs() -> ActionType & {
-    if constexpr (supports_alternative<ActionType, Actions...>()) {
-      return std::get<ActionType>(option);
-    } else {
-      throw std::bad_variant_access{};
-    }
+    static_assert(supports_alternative<ActionType, Actions...>(),
+        "do not use GetAs() with the wrong type");
+    return std::get<ActionType>(option);
   }
 
-  template <typename ActionType> auto GetAs() const -> const ActionType & {
-    if constexpr (supports_alternative<ActionType, Actions...>()) {
-      return std::get<ActionType>(option);
-    } else {
-      throw std::bad_variant_access{};
-    }
+  template <typename ActionType>
+  [[nodiscard]] [[nodiscard]] auto GetAs() const -> const ActionType & {
+    static_assert(supports_alternative<ActionType, Actions...>(),
+        "do not use GetAs() with the wrong type");
+    return std::get<ActionType>(option);
   }
 
 private:

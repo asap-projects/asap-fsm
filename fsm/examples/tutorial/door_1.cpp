@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //===----------------------------------------------------------------------===//
 
+#include <exception>
 #include <iostream>
 
 #include <fsm/fsm.h>
@@ -43,19 +44,25 @@ void PrintDoorState(const Door &door) {
 } // namespace
 
 auto main() -> int {
-  Door door{ClosedState{}, OpenState{}};
-  std::cout << "-- Starting\n";
-  PrintDoorState(door);
+  try {
+    Door door{ClosedState{}, OpenState{}};
+    std::cout << "-- Starting\n";
+    PrintDoorState(door);
 
-  std::cout << "-- sending close event\n";
-  door.Handle(CloseEvent{});
-  PrintDoorState(door);
+    std::cout << "-- sending close event\n";
+    door.Handle(CloseEvent{});
+    PrintDoorState(door);
 
-  std::cout << "-- sending open event\n";
-  door.Handle(OpenEvent{});
-  PrintDoorState(door);
+    std::cout << "-- sending open event\n";
+    door.Handle(OpenEvent{});
+    PrintDoorState(door);
 
-  std::cout << "-- sending close event\n";
-  door.Handle(CloseEvent{});
-  PrintDoorState(door);
+    std::cout << "-- sending close event\n";
+    door.Handle(CloseEvent{});
+    PrintDoorState(door);
+  } catch (const std::exception &err) {
+    std::cerr << "An exception was thrown: " << err.what() << std::endl;
+  } catch (...) {
+    std::cerr << "An unknown exception was thrown" << std::endl;
+  }
 }

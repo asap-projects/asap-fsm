@@ -61,18 +61,24 @@ struct OpenState
 using Door = StateMachine<ClosedState, OpenState>;
 
 auto main() -> int {
-  Door door{ClosedState{}, OpenState{}};
-  std::cout << "-- Starting\n";
+  try {
+    Door door{ClosedState{}, OpenState{}};
+    std::cout << "-- Starting\n";
 
-  std::cout << "-- sending close event\n";
-  door.Handle(CloseEvent{});
+    std::cout << "-- sending close event\n";
+    door.Handle(CloseEvent{});
 
-  std::cout << "-- sending open event\n";
-  door.Handle(OpenEvent{});
+    std::cout << "-- sending open event\n";
+    door.Handle(OpenEvent{});
 
-  std::cout << "-- sending open event\n";
-  door.Handle(OpenEvent{});
+    std::cout << "-- sending open event\n";
+    door.Handle(OpenEvent{});
 
-  std::cout << "-- sending close event\n";
-  door.Handle(CloseEvent{});
+    std::cout << "-- sending close event\n";
+    door.Handle(CloseEvent{});
+  } catch (const std::exception &err) {
+    std::cerr << "An exception was thrown: " << err.what() << std::endl;
+  } catch (...) {
+    std::cerr << "An unknown exception was thrown" << std::endl;
+  }
 }
