@@ -27,7 +27,6 @@
 #include <variant>
 
 #include <common/compilers.h>
-#include <fsm/asap_fsm_export.h>
 
 /// Namespace for the State Machine library.
 namespace asap::fsm {
