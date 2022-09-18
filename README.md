@@ -57,17 +57,14 @@ event loop which calls the state machine's `Handle` method. The latter
 dispatches the event to the current state, which returns a specific action
 that gets executed to eventually transition to a new state.
 
-Examples and detailed documentation of the API can be found at the
-[Project Documentation](https://asap-projects.github.io/asap-fsm/asap_fsm_master/html) pages.
-
 ## Project Documentation
 
 We have detailed guides for setting up an efficient development environment, the
 development process, project structure, etc. Take a look at the available guides
-[here](https://abdes.github.io/asap/asap_master/html/).
+[here](https://abdes.github.io/asap/asap_master/html/project-development/index.html).
 
-In addition to that, specific documentation for the command line parser, its
-usage and APIs, are provided in the project GitHub Pages site
+In addition to that, specific documentation for the API, its usage and APIs, is
+provided in the project GitHub Pages site
 [here](https://asap-projects.github.io/asap-fsm/asap_fsm_master/html/).
 
 ## Getting Started
