@@ -36,27 +36,17 @@ asap_declare_module(
 # with the forked project name.
 set(MODULE_TARGET_NAME "asap_${META_MODULE_NAME}")
 
-asap_add_library(
-  ${MODULE_TARGET_NAME}
-  STATIC
-  SHARED
-  WARNING
-  SOURCES
-  # Headers
-  "include/fsm/fsm.h"
-  # Sources
-  "src/fsm.cpp")
+asap_add_library(${MODULE_TARGET_NAME} INTERFACE WARNING)
 
-target_link_libraries(${MODULE_TARGET_NAME} PRIVATE asap::common)
+target_link_libraries(${MODULE_TARGET_NAME} INTERFACE asap::common)
 
 target_include_directories(
   ${MODULE_TARGET_NAME}
-  PUBLIC $<INSTALL_INTERFACE:include>
-         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+  INTERFACE $<INSTALL_INTERFACE:include>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>)
 
-target_compile_features(${MODULE_TARGET_NAME} PUBLIC cxx_std_17)
+target_compile_features(${MODULE_TARGET_NAME} INTERFACE cxx_std_17)
 
 # common comes directly from asap and is usually kept as is. It is more
 # convenient to simply use it as asap::common

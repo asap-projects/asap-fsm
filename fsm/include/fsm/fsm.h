@@ -26,6 +26,7 @@
 #include <utility>
 #include <variant>
 
+#include <common/compilers.h>
 #include <fsm/asap_fsm_export.h>
 
 /// Namespace for the State Machine library.
@@ -362,7 +363,16 @@ struct DoNothing {
     return Continue{};
   }
 
-  [[nodiscard]] ASAP_FSM_API static auto data() noexcept -> const std::any &;
+  [[nodiscard]] static auto data() noexcept -> const std::any & {
+    ASAP_DIAGNOSTIC_PUSH
+#if defined(ASAP_CLANG_VERSION)
+    ASAP_PRAGMA(clang diagnostic ignored "-Wexit-time-destructors")
+#endif
+    // Nothing to worry about here for the exit time destructor.
+    static const std::any data_{};
+    ASAP_DIAGNOSTIC_POP
+    return data_;
+  }
 
   template <typename ActionType>
   [[nodiscard]] auto IsA() const noexcept -> bool {
