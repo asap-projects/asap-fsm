@@ -341,38 +341,10 @@ title="Print to PDF"
 transmit errors to the state machine, other places in the implementation such as
 the OnEnter() or OnLeave() methods in states do not have access to actions, and
 therefore report errors as exceptions.</p>
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N4asap3fsm17StateMachineErrorE">
-<span id="_CPPv3N4asap3fsm17StateMachineErrorE"></span><span id="_CPPv2N4asap3fsm17StateMachineErrorE"></span><span id="asap::fsm::StateMachineError"></span><span class="target" id="classasap_1_1fsm_1_1_state_machine_error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateMachineError</span></span></span><a class="headerlink" href="#_CPPv4N4asap3fsm17StateMachineErrorE" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>The base class for exceptions thrown by state machine implementations. </p>
-<p>For consistency and clarity in the error messages and handling of errors when animating the state machine, it is important that exceptions thrown by concrete state machines derive from this class.</p>
-<p><div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="statemachine.html#classasap_1_1fsm_1_1_state_machine_1a45c1dabcaf460747305ebf7784546631"><span class="std std-ref">StateMachine::Handle</span></a> </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “asap::fsm::StateMachineError” in doxygen xml output for project “asap_fsm” from directory: /home/runner/work/asap-fsm/asap-fsm/build/dox/asap_fsm/xml</p>
 </div>
-</p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK4asap3fsm17StateMachineError4WhatEv">
-<span id="_CPPv3NK4asap3fsm17StateMachineError4WhatEv"></span><span id="_CPPv2NK4asap3fsm17StateMachineError4WhatEv"></span><span id="asap::fsm::StateMachineError::WhatC"></span><span class="target" id="classasap_1_1fsm_1_1_state_machine_error_1a03cf7e16a44d8b3be1a971b22f920d7c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">What</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="o"><span class="pre">-&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><a class="headerlink" href="#_CPPv4NK4asap3fsm17StateMachineError4WhatEv" title="Permalink to this definition">#</a><br /></dt>
-<dd><p>Provides an explanatory message about the error. </p>
-<p>THe actual error message should be set by the specific derived exception class. If not set, a generic message will be provided which may not say anything useful about the error.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Pointer to a null-terminated string with explanatory information. The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function on the exception object is called. </p>
-</dd>
-</dl>
-</dd></dl>
-
-</div>
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N4asap3fsm17StateMachineError4ImplE">
-<span id="_CPPv3N4asap3fsm17StateMachineError4ImplE"></span><span id="_CPPv2N4asap3fsm17StateMachineError4ImplE"></span><span id="asap::fsm::StateMachineError::Impl"></span><span class="target" id="classasap_1_1fsm_1_1_state_machine_error_1_1_impl"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Impl</span></span></span><a class="headerlink" href="#_CPPv4N4asap3fsm17StateMachineError4ImplE" title="Permalink to this definition">#</a><br /></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </section>
 
 
