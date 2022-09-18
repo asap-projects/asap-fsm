@@ -43,8 +43,7 @@ target_link_libraries(${MODULE_TARGET_NAME} INTERFACE asap::common)
 target_include_directories(
   ${MODULE_TARGET_NAME}
   INTERFACE $<INSTALL_INTERFACE:include>
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>)
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 target_compile_features(${MODULE_TARGET_NAME} INTERFACE cxx_std_17)
 
