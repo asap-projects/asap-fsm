@@ -14,7 +14,7 @@ asap_declare_module(
   DESCRIPTION
   "C++17 template-based framework for finite state machines implementation"
   GITHUB_REPO
-  "https://github.com/abdes/asap"
+  "https://github.com/asap-projects/asap-fsm"
   AUTHOR_MAINTAINER
   "Abdessattar Sassi"
   VERSION_MAJOR
