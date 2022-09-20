@@ -35,4 +35,6 @@ asap_add_package(
   GITHUB_REPOSITORY
   asap-projects/asap-common
   OPTIONS
-  "ASAP_COMMON_INSTALL ON")
+  "ASAP_COMMON_INSTALL ON"
+  "ASAP_BUILD_TESTS OFF"
+  "ASAP_BUILD_EXAMPLES OFF")
