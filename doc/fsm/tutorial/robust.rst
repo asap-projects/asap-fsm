@@ -24,7 +24,7 @@ we will use the `OnEnter()` method. OnEnter/OnLeave are optional, but when they
 are present, they get called during state transitions. For this example, we will
 omit the `OnLeave` method as we just want to report the new state.
 
-.. literalinclude:: /../examples/tutorial/door_2.cpp
+.. literalinclude:: ../../../fsm/examples/tutorial/door_2.cpp
   :lines: 7-
   :linenos:
 

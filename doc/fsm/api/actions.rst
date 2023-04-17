@@ -6,8 +6,9 @@
      ^ for sub-subsections
      " for paragraphs
 
+*********************
 State Machine Actions
-=====================
+*********************
 
 Actions are returned from state event handlers and are the normal way of
 communicating back to the state machine what to do next. The only requirement on

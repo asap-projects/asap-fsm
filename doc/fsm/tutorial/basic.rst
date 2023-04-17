@@ -20,7 +20,7 @@ following diagram:
   :alt: Door states
   :align: center
 
-.. literalinclude:: /../examples/tutorial/door_1.cpp
+.. literalinclude:: ../../../fsm/examples/tutorial/door_1.cpp
   :lines: 7-
   :linenos:
   :emphasize-lines: 18-25

@@ -1,6 +1,14 @@
-#######################################
-ASAP State Machine module documentation
-#######################################
+.. Structure conventions
+     # with overline, for parts
+     * with overline, for chapters
+     = for sections
+     - for subsections
+     ^ for sub-subsections
+     " for paragraphs
+
+###################################
+Module: fsm (Finite State Machines)
+###################################
 
 .. toctree::
    :maxdepth: 2
@@ -8,8 +16,6 @@ ASAP State Machine module documentation
 
    Tutorial <tutorial>
    API <api>
-   License <license>
-   Version <version>
 
 Welcome! This is the documentation for the *fsm* module, part of the *asap*
 project. This is a feature module providing a framework to quickly build type
@@ -42,6 +48,6 @@ Parts of the documentation
 ==========================
 
 :doc:`API reference <api>`
-------------------------------
-  *check this out to see the documentation of classes, macros, etc. offered by
-  this module*
+--------------------------
+*check this out to see the documentation of classes, macros, etc. offered by
+this module*

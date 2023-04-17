@@ -6,12 +6,12 @@
      ^ for sub-subsections
      " for paragraphs
 
-********
-Tutorial
-********
+*********
+Tutorials
+*********
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :hidden:
 
    Basic door <tutorial/basic>

@@ -27,7 +27,7 @@ The new state machine can be represented by the following diagram:
 Besides an additional state, we’ll introduce two new events `Lock` and `Unlock`.
 Now, once the door is locked, the only way to open it, is to unlock it first.
 
-.. literalinclude:: /../examples/tutorial/door_3.cpp
+.. literalinclude:: ../../../fsm/examples/tutorial/door_3.cpp
   :lines: 7-
   :linenos:
 
